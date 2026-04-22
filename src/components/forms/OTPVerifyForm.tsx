@@ -7,6 +7,8 @@ import { z } from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useVerifyAccountMutation, useResendOtpMutation } from "@/redux/features/auth/authApi";
+import { toast } from "sonner";
 
 const otpSchema = z.object({
     otp1: z.string().length(1, "Required"),
@@ -22,9 +24,12 @@ type OTPFormData = z.infer<typeof otpSchema>;
 export default function OTPVerifyForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const email = searchParams.get("email") || "your email";
+    const email = searchParams.get("email") || "";
     const [isLoading, setIsLoading] = useState(false);
     const [countdown, setCountdown] = useState(59);
+
+    const [verifyAccount] = useVerifyAccountMutation();
+    const [resendOtp] = useResendOtpMutation();
 
     const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
@@ -61,12 +66,60 @@ export default function OTPVerifyForm() {
     const handleSubmitOTP = async (data: OTPFormData) => {
         setIsLoading(true);
         const otp = Object.values(data).join("");
-        console.log("OTP submitted:", otp);
-        // Simulate verification
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setIsLoading(false);
-        router.push("/auth/reset-password");
+        const toastId = toast.loading("Verifying code...");
+
+        try {
+            const response = await verifyAccount({
+                email,
+                oneTimeCode: otp,
+            }).unwrap();
+
+            if (response.success) {
+                toast.success(response.message || "Account verified successfully!");
+                router.push(`/auth/reset-password?email=${encodeURIComponent(email)}&token=${response.data}`);
+            } else {
+                toast.error(response.message || "Invalid verification code");
+            }
+        } catch (error: any) {
+            console.error("Verification error:", error);
+            toast.error(error?.data?.message || "Verification failed");
+        } finally {
+            setIsLoading(false);
+            toast.dismiss(toastId);
+        }
     };
+
+    const handleResendOtp = async () => {
+        if (countdown > 0) return;
+
+        const toastId = toast.loading("Resending code...");
+        try {
+            const response = await resendOtp({
+                email,
+                authType: "FORGET_PASSWORD",
+            }).unwrap();
+
+            if (response.success) {
+                toast.success("Verification code resent!");
+                setCountdown(59);
+            } else {
+                toast.error(response.message || "Failed to resend code");
+            }
+        } catch (error: any) {
+            console.error("Resend OTP error:", error);
+            toast.error(error?.data?.message || "Failed to resend code");
+        } finally {
+            toast.dismiss(toastId);
+        }
+    };
+
+    // Timer logic
+    React.useEffect(() => {
+        if (countdown > 0) {
+            const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [countdown]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const value = e.target.value;
@@ -165,9 +218,19 @@ export default function OTPVerifyForm() {
 
                 {/* Resend Timer */}
                 <div className="text-center mb-8">
-                    <p className="text-[#5A5A5A] text-sm">
-                        Resend code in <span className="font-bold text-[#1A1A1A]">{countdown}s</span>
-                    </p>
+                    {countdown > 0 ? (
+                        <p className="text-[#5A5A5A] text-sm">
+                            Resend code in <span className="font-bold text-[#1A1A1A]">{countdown}s</span>
+                        </p>
+                    ) : (
+                        <button 
+                            type="button" 
+                            onClick={handleResendOtp}
+                            className="text-[#0052FF] text-sm font-bold hover:underline"
+                        >
+                            Resend Code
+                        </button>
+                    )}
                 </div>
 
                 {/* Help Section */}

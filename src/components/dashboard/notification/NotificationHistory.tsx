@@ -6,7 +6,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
-import { useGetNotificationsQuery } from "@/redux/features/notifications/notificationApi";
 
 interface NotificationItem {
     _id: string;
@@ -72,16 +71,81 @@ const LoadingSkeleton = ({ pageSize }: { pageSize: number }) => (
 export default function NotificationHistory({ pageSize = 5 }: NotificationHistoryProps) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Fetch notifications from API
-    const { data: apiResponse, isLoading, isError, refetch } = useGetNotificationsQuery({ page: currentPage, limit: pageSize }, { refetchOnMountOrArgChange: true });
+    // Mock notifications data
+    const mockNotifications = [
+        {
+            _id: "1",
+            title: "Event Reminder",
+            content: "Don't forget the upcoming tech conference tomorrow!",
+            type: "EVENT_REMINDER",
+            channel: "IN_APP",
+            status: "sent",
+            isRead: true,
+            createdAt: "2024-01-15T10:00:00.000Z",
+            analytics: { openRate: 75, engagement: 12 },
+            userId: { name: "All Users", email: "all@example.com" }
+        },
+        {
+            _id: "2",
+            title: "New Feature Announcement",
+            content: "Check out our new dashboard features!",
+            type: "SYSTEM_ALERT",
+            channel: "IN_APP",
+            status: "sent",
+            isRead: false,
+            createdAt: "2024-01-10T14:30:00.000Z",
+            analytics: { openRate: 60, engagement: 8 },
+            userId: { name: "Active Users", email: "active@example.com" }
+        },
+        {
+            _id: "3",
+            title: "Community Update",
+            content: "Monthly community update is now available.",
+            type: "SYSTEM_ALERT",
+            channel: "IN_APP",
+            status: "sent",
+            isRead: true,
+            createdAt: "2023-12-20T09:15:00.000Z",
+            analytics: { openRate: 80, engagement: 15 },
+            userId: { name: "All Users", email: "all@example.com" }
+        },
+        {
+            _id: "4",
+            title: "Holiday Greetings",
+            content: "Happy Holidays from our team!",
+            type: "PROMOTIONAL",
+            channel: "IN_APP",
+            status: "sent",
+            isRead: true,
+            createdAt: "2023-12-15T08:00:00.000Z",
+            analytics: { openRate: 90, engagement: 20 },
+            userId: { name: "All Users", email: "all@example.com" }
+        },
+        {
+            _id: "5",
+            title: "Survey Invitation",
+            content: "We'd love to hear your feedback.",
+            type: "PROMOTIONAL",
+            channel: "IN_APP",
+            status: "sent",
+            isRead: false,
+            createdAt: "2023-12-01T11:45:00.000Z",
+            analytics: { openRate: 50, engagement: 5 },
+            userId: { name: "Selected Users", email: "selected@example.com" }
+        }
+    ];
+
+    const isLoading = false;
+    const isError = false;
+    const refetch = () => {};
 
     // Process notifications for display
     const { processedNotifications, totalNotifications, totalPages } = useMemo(() => {
-        const notifications = apiResponse?.data || [];
-        const total = apiResponse?.meta?.total || 0;
-        const pages = apiResponse?.meta?.totalPages || 1;
+        const notifications = mockNotifications;
+        const total = mockNotifications.length;
+        const pages = 1;
 
-        const processed: ProcessedNotification[] = notifications.map((notification: NotificationItem) => ({
+        const processed: ProcessedNotification[] = notifications.map((notification: any) => ({
             id: notification._id,
             title: notification.title,
             content: notification.content,
@@ -103,7 +167,7 @@ export default function NotificationHistory({ pageSize = 5 }: NotificationHistor
             totalNotifications: total,
             totalPages: pages,
         };
-    }, [apiResponse]); // Only depend on apiResponse
+    }, []);
 
     // Handle page change
     const handlePageChange = (page: number) => {

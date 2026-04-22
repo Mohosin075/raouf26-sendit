@@ -42,12 +42,20 @@ export default function ResetPasswordForm() {
     });
 
     const handleResetPassword = async (data: ResetPasswordFormData) => {
+        const token = searchParams.get("token");
+        if (!token) {
+            toast.error("Invalid or expired token");
+            return;
+        }
+
         setIsLoading(true);
         const toastId = toast.loading("Resetting password...");
 
         try {
-            // Here you would typically include the token/email from searchParams
-            const response = await resetPassword(data).unwrap();
+            const response = await resetPassword({
+                body: { password: data.newPassword },
+                token: token
+            }).unwrap();
 
             if (response.success) {
                 toast.success(response.message || "Password reset successfully!");

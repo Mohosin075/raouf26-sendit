@@ -121,7 +121,6 @@ import { Separator } from "@/components/ui/separator";
 import { TableCell } from "@/components/ui/table";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { useDeleteSupportMutation, useUpdateSupportStatusMutation, SUPPORT_STATUS } from "@/redux/features/supports/supportApi";
 
 interface SupportData {
     id: string;
@@ -145,9 +144,8 @@ const ReviewReportedContent = ({ support }: ReviewReportedContentProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    // RTK Query mutations
-    const [deleteSupport, { isLoading: isDeleting }] = useDeleteSupportMutation();
-    const [updateSupportStatus, { isLoading: isUpdating }] = useUpdateSupportStatusMutation();
+    const isDeleting = false;
+    const isUpdating = false;
 
     const handleOpen = () => {
         if (support) {
@@ -160,30 +158,16 @@ const ReviewReportedContent = ({ support }: ReviewReportedContentProps) => {
 
     const handleDismissReport = async () => {
         if (!support) return;
-
-        try {
-            await updateSupportStatus({
-                id: support.id,
-                status: SUPPORT_STATUS.SOLVED, // Dismiss = Mark as solved
-            }).unwrap();
-            handleClose();
-        } catch (error: any) {
-            console.error("Failed to dismiss report:", error);
-            setErrorMessage(error?.data?.message || "Failed to dismiss report");
-        }
+        console.log("Dismissing report (Demo)");
+        handleClose();
     };
 
     const handleDeleteSupport = async () => {
         if (!support) return;
 
-        if (confirm("Are you sure you want to delete this support ticket? This action cannot be undone.")) {
-            try {
-                await deleteSupport(support.id).unwrap();
-                handleClose();
-            } catch (error: any) {
-                console.error("Failed to delete support:", error);
-                setErrorMessage(error?.data?.message || "Failed to delete support ticket");
-            }
+        if (confirm("Are you sure you want to delete this support ticket? This action cannot be undone. (Demo)")) {
+            console.log("Deleting support (Demo)");
+            handleClose();
         }
     };
 

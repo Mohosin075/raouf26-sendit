@@ -34,7 +34,7 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Risk & Policy",
-        url: "/terms-conditions",
+        url: "/risk-policy",
         icon: Shield,
     },
     {

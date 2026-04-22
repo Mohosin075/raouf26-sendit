@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default function ShipmentsContent() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -14,7 +15,7 @@ export default function ShipmentsContent() {
             id: "SHP2845",
             sender: "Sarah Johnson",
             traveler: "Michael Chen",
-            route: "NYC ? London",
+            route: "NYC → London",
             status: "Active",
             date: "Apr 18, 2026",
             riskFlag: "Normal"
@@ -23,7 +24,7 @@ export default function ShipmentsContent() {
             id: "SHP2844",
             sender: "Emma Williams",
             traveler: "James Martinez",
-            route: "LA ? Tokyo",
+            route: "LA → Tokyo",
             status: "Completed",
             date: "Apr 17, 2026",
             riskFlag: "Normal"
@@ -32,7 +33,7 @@ export default function ShipmentsContent() {
             id: "SHP2843",
             sender: "Olivia Brown",
             traveler: "Michael Chen",
-            route: "Miami ? Paris",
+            route: "Miami → Paris",
             status: "Pending",
             date: "Apr 16, 2026",
             riskFlag: "Flagged"
@@ -41,7 +42,7 @@ export default function ShipmentsContent() {
             id: "SHP2842",
             sender: "Sarah Johnson",
             traveler: "James Martinez",
-            route: "Boston ? Berlin",
+            route: "Boston → Berlin",
             status: "Active",
             date: "Apr 15, 2026",
             riskFlag: "Normal"
@@ -50,89 +51,107 @@ export default function ShipmentsContent() {
             id: "SHP2841",
             sender: "Emma Williams",
             traveler: "Michael Chen",
-            route: "Seattle ? Sydney",
+            route: "Seattle → Sydney",
             status: "Failed",
             date: "Apr 14, 2026",
             riskFlag: "Flagged"
         }
     ];
 
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case "Active": return "bg-green-100 text-green-800";
-            case "Completed": return "bg-blue-100 text-blue-800";
-            case "Pending": return "bg-yellow-100 text-yellow-800";
-            case "Failed": return "bg-red-100 text-red-800";
-            default: return "bg-gray-100 text-gray-800";
+    const getStatusBadgeClass = (status: string) => {
+        switch (status.toLowerCase()) {
+            case 'active': return 'bg-green-50 text-green-600 border-none px-4 py-1 rounded-full text-[10px] font-medium';
+            case 'completed': return 'bg-green-100 text-green-800 border-none px-4 py-1 rounded-full text-[10px] font-medium';
+            case 'pending': return 'bg-yellow-50 text-yellow-600 border-none px-4 py-1 rounded-full text-[10px] font-medium';
+            case 'failed': return 'bg-red-50 text-red-600 border-none px-4 py-1 rounded-full text-[10px] font-medium';
+            default: return 'bg-gray-50 text-gray-600 border-none px-4 py-1 rounded-full text-[10px] font-medium';
         }
     };
 
-    const getRiskColor = (risk: string) => {
-        return risk === "Flagged" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800";
+    const getRiskBadgeClass = (risk: string) => {
+        return risk.toLowerCase() === 'flagged' 
+            ? 'bg-red-50 text-red-600 border-none px-4 py-1 rounded-full text-[10px] font-medium' 
+            : 'bg-green-50 text-green-600 border-none px-4 py-1 rounded-full text-[10px] font-medium';
     };
 
     return (
-        <div className="p-8 bg-[#F9F9F9] min-h-screen space-y-6">
+        <div className="p-8 space-y-6 bg-[#F9F9F9] min-h-screen">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold text-gray-900">Trips & Shipments</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Trips & Shipments</h1>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex gap-4">
-                <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input
-                        placeholder="Search shipments..."
-                        className="pl-10 rounded-lg border-gray-300"
+            {/* Filters Row */}
+            <div className="grid grid-cols-4 gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input 
+                        placeholder="Search shipments..." 
+                        className="pl-10 bg-transparent border border-gray-200 rounded-lg h-11 focus-visible:ring-blue-600" 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
+                <div className="bg-transparent border border-gray-200 rounded-lg h-11"></div>
+                <div className="bg-transparent border border-gray-200 rounded-lg h-11"></div>
+                <div className="bg-transparent border border-gray-200 rounded-lg h-11"></div>
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50 border-b border-gray-200">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">SHIPMENT ID</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">SENDER</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">TRAVELER</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">ROUTE</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">STATUS</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">DATE</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">RISK FLAG</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">ACTIONS</th>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <table className="w-full text-left">
+                    <thead className="bg-gray-50/50 border-b border-gray-100">
+                        <tr>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">SHIPMENT ID</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">SENDER</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">TRAVELER</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">ROUTE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">STATUS</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">DATE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">RISK FLAG</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-right">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                        {shipments.map((shipment) => (
+                            <tr key={shipment.id} className="hover:bg-gray-50/50 transition-colors">
+                                <td className="px-6 py-4">
+                                    <span className="text-sm font-bold text-gray-900">{shipment.id}</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="text-sm text-gray-600">{shipment.sender}</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="text-sm text-gray-600">{shipment.traveler}</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="text-sm text-gray-600">{shipment.route}</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={getStatusBadgeClass(shipment.status)}>
+                                        {shipment.status}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="text-sm text-gray-600">{shipment.date}</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={getRiskBadgeClass(shipment.riskFlag)}>
+                                        {shipment.riskFlag}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <Link 
+                                        href={`/shipments/${shipment.id}`}
+                                        className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                                    >
+                                        View
+                                    </Link>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {shipments.map((shipment) => (
-                                <tr key={shipment.id} className="border-b border-gray-200 hover:bg-gray-50">
-                                    <td className="px-6 py-4 text-sm font-semibold text-gray-900">{shipment.id}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{shipment.sender}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{shipment.traveler}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{shipment.route}</td>
-                                    <td className="px-6 py-4">
-                                        <Badge className={`${getStatusColor(shipment.status)}`}>
-                                            {shipment.status}
-                                        </Badge>
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">{shipment.date}</td>
-                                    <td className="px-6 py-4">
-                                        <Badge className={`${getRiskColor(shipment.riskFlag)}`}>
-                                            {shipment.riskFlag}
-                                        </Badge>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
