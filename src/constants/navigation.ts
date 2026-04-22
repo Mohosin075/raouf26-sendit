@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Truck, LifeBuoy, Wallet, Bell, Shield, BarChart2, Settings, LogOut, FileText } from "lucide-react";
+import { LayoutDashboard, Users, Truck, Wallet, Bell, Shield, MessageSquare, Settings, FileText, BarChart2 } from "lucide-react";
 import { MenuItem, Role } from "@/types/navigation";
 
 const commonMenuItems: MenuItem[] = [
@@ -19,8 +19,8 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Support & Disputes",
-        url: "/content-moderation",
-        icon: LifeBuoy,
+        url: "/messages",
+        icon: MessageSquare,
     },
     {
         title: "Payments & Wallets",
@@ -39,7 +39,7 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Reports & Analytics",
-        url: "/messages",
+        url: "/content-moderation",
         icon: BarChart2,
     },
     {
