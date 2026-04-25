@@ -13,11 +13,9 @@ import {
     ShieldCheck, 
     FileText, 
     Clock, 
-    ArrowUpRight,
-    Lock
+    Lock,
+    Shield
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
 export default function UserDetailsContent({ id }: { id: string }) {
     const [note, setNote] = useState("");
@@ -31,46 +29,42 @@ export default function UserDetailsContent({ id }: { id: string }) {
                     <p className="text-gray-500 text-sm mt-1">User ID: USR001</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button className="bg-[#00B67A] hover:bg-[#00A36D] text-white rounded-lg px-6">
+                    <Button className="bg-[#00B67A] hover:bg-[#00A36D] text-white rounded-lg px-6 font-bold h-10">
                         Approve KYC
                     </Button>
-                    <Button variant="destructive" className="bg-[#FF3B30] hover:bg-[#E6352B] text-white rounded-lg px-6">
+                    <Button variant="destructive" className="bg-[#FF3B30] hover:bg-[#E6352B] text-white rounded-lg px-6 font-bold h-10">
                         Suspend User
                     </Button>
                 </div>
             </div>
 
             <div className="grid grid-cols-12 gap-6">
-                {/* Left Column */}
-                <div className="col-span-12 lg:col-span-4 space-y-6">
-                    {/* Basic Information */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                {/* Basic Information */}
+                <div className="col-span-12 lg:col-span-4">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-bold text-gray-900">Basic Information</h2>
-                            <button className="text-gray-400 hover:text-gray-600">
-                                <FileText className="w-5 h-5" />
-                            </button>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <div>
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Full Legal Name</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Full Legal Name</p>
                                 <p className="text-sm font-medium text-gray-900">Sarah Elizabeth Johnson</p>
                             </div>
                             <div>
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Email Address</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Email Address</p>
                                 <p className="text-sm font-medium text-gray-900">s.johnson@example.com</p>
                             </div>
                             <div>
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Phone Number</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Phone Number</p>
                                 <p className="text-sm font-medium text-gray-900">+254 712 345 678</p>
                             </div>
-                            <div className="grid grid-cols-2 gap-4 pt-2">
+                            <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Role</p>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Role</p>
                                     <p className="text-sm font-medium text-gray-900">Premium Shipper</p>
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Language</p>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Language</p>
                                     <p className="text-sm font-medium text-gray-900">English (UK)</p>
                                 </div>
                             </div>
@@ -78,12 +72,11 @@ export default function UserDetailsContent({ id }: { id: string }) {
                     </div>
                 </div>
 
-                {/* Middle Column */}
-                <div className="col-span-12 lg:col-span-5 space-y-6">
-                    {/* Wallet Summary */}
-                    <div className="bg-[#0052FF] p-8 rounded-3xl shadow-lg text-white space-y-8">
+                {/* Wallet Summary */}
+                <div className="col-span-12 lg:col-span-5">
+                    <div className="bg-[#0052FF] p-8 rounded-3xl shadow-lg text-white space-y-8 h-full">
                         <div>
-                            <p className="text-xs font-medium opacity-80 mb-2">AVAILABLE BALANCE</p>
+                            <p className="text-xs font-medium opacity-80 mb-2 uppercase tracking-wider">Available Balance</p>
                             <h3 className="text-5xl font-bold">$12,450.00</h3>
                         </div>
                         <div className="grid grid-cols-2 gap-6">
@@ -99,9 +92,8 @@ export default function UserDetailsContent({ id }: { id: string }) {
                     </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="col-span-12 lg:col-span-3 space-y-6">
-                    {/* Account Status */}
+                {/* Account Status */}
+                <div className="col-span-12 lg:col-span-3">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
                         <h2 className="text-lg font-bold text-gray-900 mb-6">Account Status</h2>
                         <div className="space-y-6">
@@ -115,26 +107,21 @@ export default function UserDetailsContent({ id }: { id: string }) {
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-sm text-gray-600">Auto-Payout</span>
-                                <Switch checked />
+                                <Switch checked className="data-[state=checked]:bg-green-500" />
                             </div>
-                            <div className="pt-4 border-t border-gray-50 flex items-center gap-2 text-[#00B67A] font-bold text-xs">
+                            <div className="pt-4 border-t border-gray-50 flex items-center gap-2 text-[#00B67A] font-bold text-xs uppercase tracking-tight">
                                 <CheckCircle className="w-4 h-4" />
-                                ACTIVE STATUS
+                                Active Status
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Second Row */}
-                <div className="col-span-12 lg:col-span-8 space-y-6">
-                    {/* Uploaded Documents */}
+                {/* Uploaded Documents */}
+                <div className="col-span-12 lg:col-span-8">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-bold text-gray-900">Uploaded Documents</h2>
-                            <div className="flex gap-2">
-                                <Badge className="bg-[#0052FF]/10 text-[#0052FF] border-none px-3 py-0.5 text-[10px] font-bold rounded-full">3 TOTAL</Badge>
-                                <Badge className="bg-[#FF3B30]/10 text-[#FF3B30] border-none px-3 py-0.5 text-[10px] font-bold rounded-full">1 PENDING REVIEW</Badge>
-                            </div>
                         </div>
                         <div className="grid grid-cols-3 gap-4">
                             {/* Passport */}
@@ -160,7 +147,9 @@ export default function UserDetailsContent({ id }: { id: string }) {
                                     <p className="text-sm font-bold text-gray-900">CIN (ID Card)</p>
                                     <p className="text-[10px] text-gray-400">Front & Back</p>
                                 </div>
-                                <Clock className="w-4 h-4 text-[#0052FF] absolute bottom-4 right-4" />
+                                <div className="w-4 h-4 border-2 border-[#0052FF] rounded-full absolute bottom-4 right-4 flex items-center justify-center">
+                                    <div className="w-1.5 h-0.5 bg-[#0052FF]"></div>
+                                </div>
                             </div>
                             {/* Driving License */}
                             <div className="p-4 rounded-xl border border-gray-100 bg-gray-50/50 space-y-3 relative">
@@ -177,90 +166,96 @@ export default function UserDetailsContent({ id }: { id: string }) {
                     </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-4 space-y-6">
-                    {/* Agreements */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                {/* Agreements */}
+                <div className="col-span-12 lg:col-span-4">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
                         <h2 className="text-lg font-bold text-gray-900 mb-6">Agreements</h2>
                         <div className="space-y-3">
-                            {['Terms of Service', 'Privacy Policy', 'KYC Consent'].map((agreement) => (
-                                <div key={agreement} className="flex justify-between items-center p-3 rounded-xl bg-gray-50/50 border border-gray-50">
-                                    <div className="flex items-center gap-3">
-                                        <FileText className="w-4 h-4 text-gray-400" />
-                                        <span className="text-sm font-medium text-gray-700">{agreement}</span>
-                                    </div>
-                                    <Badge className="bg-[#00B67A]/10 text-[#00B67A] border-none px-2 py-0.5 text-[8px] font-bold rounded-md">SIGNED</Badge>
+                            <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50/50 border border-gray-50">
+                                <div className="flex items-center gap-3">
+                                    <FileText className="w-4 h-4 text-gray-400" />
+                                    <span className="text-sm font-medium text-gray-700">Terms of Service</span>
                                 </div>
-                            ))}
+                                <Badge className="bg-[#00B67A]/10 text-[#00B67A] border-none px-2 py-0.5 text-[8px] font-bold rounded-md">SIGNED</Badge>
+                            </div>
+                            <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50/50 border border-gray-50">
+                                <div className="flex items-center gap-3">
+                                    <Shield className="w-4 h-4 text-gray-400" />
+                                    <span className="text-sm font-medium text-gray-700">Privacy Policy</span>
+                                </div>
+                                <Badge className="bg-[#00B67A]/10 text-[#00B67A] border-none px-2 py-0.5 text-[8px] font-bold rounded-md">SIGNED</Badge>
+                            </div>
+                            <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50/50 border border-gray-50">
+                                <div className="flex items-center gap-3">
+                                    <FileText className="w-4 h-4 text-gray-400" />
+                                    <span className="text-sm font-medium text-gray-700">KYC Consent</span>
+                                </div>
+                                <Badge className="bg-[#00B67A]/10 text-[#00B67A] border-none px-2 py-0.5 text-[8px] font-bold rounded-md">SIGNED</Badge>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Third Row */}
-                <div className="col-span-12 lg:col-span-7 space-y-6">
-                    {/* Recent Activity */}
+                {/* Recent Activity */}
+                <div className="col-span-12 lg:col-span-7">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-bold text-gray-900">Recent Activity</h2>
-                            <button className="text-[#0052FF] text-[10px] font-bold uppercase tracking-widest hover:underline">VIEW ALL</button>
                         </div>
                         <div className="space-y-6">
-                            {[
-                                { 
-                                    title: "Withdrawal Approved", 
-                                    desc: "Administrator approved a payout of $450.00 to Bank Account ...4567", 
-                                    time: "2 HOURS AGO",
-                                    icon: <CheckCircle className="w-5 h-5 text-[#00B67A]" />,
-                                    iconBg: "bg-[#00B67A]/10"
-                                },
-                                { 
-                                    title: "New Document Uploaded", 
-                                    desc: "User uploaded a new CIN (ID Card) for verification", 
-                                    time: "5 HOURS AGO",
-                                    icon: <RefreshCcw className="w-5 h-5 text-[#0052FF]" />,
-                                    iconBg: "bg-[#0052FF]/10"
-                                },
-                                { 
-                                    title: "User Login", 
-                                    desc: "Successful login from IP: 192.168.1.104 (Nairobi, KE)", 
-                                    time: "YESTERDAY",
-                                    icon: <Clock className="w-5 h-5 text-gray-400" />,
-                                    iconBg: "bg-gray-100"
-                                }
-                            ].map((activity, i) => (
-                                <div key={i} className="flex gap-4">
-                                    <div className={`w-10 h-10 rounded-full ${activity.iconBg} flex items-center justify-center shrink-0`}>
-                                        {activity.icon}
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gray-900">{activity.title}</p>
-                                        <p className="text-xs text-gray-500 mt-1">{activity.desc}</p>
-                                        <p className="text-[10px] font-bold text-gray-400 mt-2">{activity.time}</p>
-                                    </div>
+                            <div className="flex gap-4">
+                                <div className="w-10 h-10 rounded-full bg-[#00B67A]/10 flex items-center justify-center shrink-0">
+                                    <CheckCircle className="w-5 h-5 text-[#00B67A]" />
                                 </div>
-                            ))}
+                                <div>
+                                    <p className="text-sm font-bold text-gray-900">Withdrawal Approved</p>
+                                    <p className="text-xs text-gray-500 mt-1 font-medium">Administrator approved a payout of $450.00 to Bank Account ...4567</p>
+                                    <p className="text-[10px] font-bold text-gray-400 mt-2 uppercase">2 Hours Ago</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="w-10 h-10 rounded-full bg-[#0052FF]/10 flex items-center justify-center shrink-0">
+                                    <RefreshCcw className="w-5 h-5 text-[#0052FF]" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-bold text-gray-900">New Document Uploaded</p>
+                                    <p className="text-xs text-gray-500 mt-1 font-medium">User uploaded a new CIN (ID Card) for verification</p>
+                                    <p className="text-[10px] font-bold text-gray-400 mt-2 uppercase">5 Hours Ago</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                                    <Clock className="w-5 h-5 text-gray-400" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-bold text-gray-900">User Login</p>
+                                    <p className="text-xs text-gray-500 mt-1 font-medium">Successful login from IP: 192.168.1.104 (Nairobi, KE)</p>
+                                    <p className="text-[10px] font-bold text-gray-400 mt-2 uppercase">Yesterday</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="col-span-12 lg:col-span-5 space-y-6">
-                    {/* Actions */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                {/* Actions */}
+                <div className="col-span-12 lg:col-span-5">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
                         <h2 className="text-lg font-bold text-gray-900 mb-6">Actions</h2>
                         <div className="grid grid-cols-2 gap-4">
-                            <button className="p-4 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-2 transition-colors">
-                                <RefreshCcw className="w-5 h-5 text-[#0052FF]" />
+                            <button className="p-6 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-3 transition-colors group">
+                                <RefreshCcw className="w-6 h-6 text-[#0052FF]" />
                                 <span className="text-[8px] font-bold text-gray-900 uppercase tracking-widest text-center">Request Re-upload</span>
                             </button>
-                            <button className="p-4 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-2 transition-colors">
-                                <XCircle className="w-5 h-5 text-[#FF3B30]" />
+                            <button className="p-6 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-3 transition-colors group">
+                                <XCircle className="w-6 h-6 text-[#FF3B30]" />
                                 <span className="text-[8px] font-bold text-gray-900 uppercase tracking-widest text-center">Reject KYC</span>
                             </button>
-                            <button className="p-4 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-2 transition-colors">
-                                <Flag className="w-5 h-5 text-[#FF3B30]" />
+                            <button className="p-6 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-3 transition-colors group">
+                                <Flag className="w-6 h-6 text-[#FF3B30]" />
                                 <span className="text-[8px] font-bold text-gray-900 uppercase tracking-widest text-center">Flag User</span>
                             </button>
-                            <button className="p-4 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-2 transition-colors">
-                                <ShieldCheck className="w-5 h-5 text-[#00B67A]" />
+                            <button className="p-6 rounded-xl border border-gray-100 hover:bg-gray-50 flex flex-col items-center justify-center gap-3 transition-colors group">
+                                <ShieldCheck className="w-6 h-6 text-[#00B67A]" />
                                 <span className="text-[8px] font-bold text-gray-900 uppercase tracking-widest text-center">Reactivate User</span>
                             </button>
                         </div>
@@ -283,7 +278,7 @@ export default function UserDetailsContent({ id }: { id: string }) {
                                     <Lock className="w-3 h-3" />
                                     Visibility: Compliance Team Only
                                 </div>
-                                <Button className="bg-[#0052FF] hover:bg-[#0041CC] text-white rounded-lg px-8 font-bold">
+                                <Button className="bg-[#0052FF] hover:bg-[#0041CC] text-white rounded-lg px-8 font-bold h-10">
                                     Save Note
                                 </Button>
                             </div>
