@@ -1,0 +1,72 @@
+Please extend the Financial Management module beyond read-only reporting. Admin needs operational finance tools: withdrawal review, manual wallet adjustments, refunds, payout retry / rejection, linked transaction investigation, exports, and full audit logging for every financial action.
+
+1. Withdrawal management
+Admin must be able to:
+review withdrawal requests
+approve withdrawal
+reject withdrawal
+retry failed payout
+mark payout as processed
+hold payout for review
+
+2. Manual transaction actions
+Admin must be able to:
+create manual refund
+create manual adjustment
+send money to user wallet
+deduct money from wallet with reason
+reverse transaction when allowed
+
+3. Wallet operations
+credit wallet manually
+debit wallet manually
+freeze wallet if needed
+
+4. Investigation view
+Each transaction should support a detail screen with:
+linked shipment / booking / trip
+sender
+transporter / traveler
+receiver if relevant
+payment method
+payout method
+transaction timeline
+internal admin notes
+
+5. Status handling
+Support statuses like:
+pending
+completed
+failed
+reversed
+under review
+refunded
+payout processing
+payout rejected
+
+6. Filters and search
+Add filters for:
+transaction type
+payout status
+user
+shipment / booking ID
+payment method
+failed / under review only
+
+7. Export / reconciliation
+Admin must be able to:
+export transactions
+export payouts
+export refunds / adjustments
+export filtered financial data for reconciliation
+
+8. Audit
+Every financial action must be logged:
+who did it
+what changed
+old value / new value
+reason
+timestamp
+
+
+In case you have any questions, please ask, since it's an important part

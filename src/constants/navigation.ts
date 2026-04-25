@@ -24,7 +24,7 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Payments & Wallets",
-        url: "/promotions",
+        url: "/payment-wallet",
         icon: Wallet,
     },
     {

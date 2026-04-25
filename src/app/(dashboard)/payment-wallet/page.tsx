@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PromotionsContent from "./PromotionsContent";
+import PromotionsContent from "./PaymentWalletContent";
 
 export const metadata: Metadata = {
     title: "Promotions",

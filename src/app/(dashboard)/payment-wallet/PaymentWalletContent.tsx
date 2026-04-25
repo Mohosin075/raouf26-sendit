@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-export default function FinancialManagementPage() {
+export default function PaymentWalletPage() {
     const stats = [
         { label: "Total Balance", amount: "$124,560.00", trend: "+12.5% from last month", icon: <TrendingUp className="w-4 h-4 text-blue-600" />, bg: "bg-blue-50" },
         { label: "Pending Earnings", amount: "$48,290.00", trend: "Across 127 transactions", icon: <TrendingUp className="w-4 h-4 text-orange-600" />, bg: "bg-orange-50" },
         { label: "Withdrawn Amount", amount: "$76,270.00", trend: "Last 30 days", icon: <TrendingUp className="w-4 h-4 text-green-600" />, bg: "bg-green-50" },
-    ];
+    ];  
 
     const transactions = [
         { id: "TXN5432", type: "Payment", user: "Sarah Johnson", amount: "$45.00", status: "Completed", date: "Apr 18, 2026" },
