@@ -1,203 +1,103 @@
 "use client";
 
-import React from 'react';
-import { TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
-import { Progress } from "@/components/ui/progress";
+import { 
+  Users, 
+  Truck, 
+  Package, 
+  CheckCircle2, 
+  AlertTriangle, 
+  DollarSign, 
+  XCircle, 
+  Bell,
+  ArrowRight,
+  ShieldCheck,
+  Wallet,
+  MessageSquare,
+  AlertCircle
+} from 'lucide-react';
 
 export default function DashboardContent() {
+  const stats = [
+    { label: "Total Users", value: "12,847", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Active Trips", value: "342", icon: Truck, color: "text-green-600", bg: "bg-green-50" },
+    { label: "Active Shipments", value: "1,284", icon: Package, color: "text-purple-600", bg: "bg-purple-50" },
+    { label: "Pending Verifications", value: "87", icon: CheckCircle2, color: "text-orange-500", bg: "bg-orange-50" },
+    { label: "Open Disputes", value: "23", icon: AlertTriangle, color: "text-orange-600", bg: "bg-orange-50" },
+    { label: "Pending Payouts", value: "$48,290", icon: DollarSign, color: "text-green-600", bg: "bg-green-50" },
+    { label: "Failed Payments", value: "12", icon: XCircle, color: "text-red-600", bg: "bg-red-50" },
+    { label: "System Alerts", value: "5", icon: Bell, color: "text-red-500", bg: "bg-red-50" },
+  ];
+
+  const healthMetrics = [
+    { label: "Support Queue Size", value: "34 tickets", status: "warning" },
+    { label: "KYC Backlog", value: "87 pending", status: "warning" },
+    { label: "Withdrawal Backlog", value: "12 pending", status: "success" },
+    { label: "Delivery Exceptions", value: "8 cases", status: "success" },
+  ];
+
+  const quickActions = [
+    { label: "Review KYC", icon: Users, color: "text-blue-600" },
+    { label: "Review Withdrawals", icon: Wallet, color: "text-blue-600" },
+    { label: "Open Support Tickets", icon: MessageSquare, color: "text-blue-600" },
+    { label: "Monitor Risk Alerts", icon: ShieldCheck, color: "text-blue-600" },
+  ];
+
   return (
-    <div className="p-8 bg-[#F9F9F9] min-h-screen space-y-8">
+    <div className="p-6 bg-[#F8FAFC] min-h-screen space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+        <h1 className="text-xl font-bold text-gray-900">Operations Overview</h1>
       </div>
 
-      {/* Top Stats - 6 cards in 3 columns grid for large screens */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Conversion Rate */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Conversion Rate</span>
-            <span className="text-green-500 text-xs font-medium">+5.2%</span>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat, i) => (
+          <div key={i} className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm space-y-4">
+            <div className={`w-10 h-10 ${stat.bg} rounded-lg flex items-center justify-center`}>
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+            </div>
+            <div className="space-y-1">
+              <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
+              <h2 className="text-2xl font-bold text-gray-900">{stat.value}</h2>
+            </div>
+            <button className="text-blue-600 text-xs font-semibold flex items-center gap-1 hover:underline">
+              View Details <ArrowRight className="w-3 h-3" />
+            </button>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900">68.5%</h2>
-        </div>
-
-        {/* Booking Rate */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Booking Rate</span>
-            <span className="text-green-500 text-xs font-medium">+3.1%</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">42.8%</h2>
-        </div>
-
-        {/* Dispute Rate */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Dispute Rate</span>
-            <span className="text-red-500 text-xs font-medium">-0.8%</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">2.4%</h2>
-        </div>
-
-        {/* KYC Approval Rate */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">KYC Approval Rate</span>
-            <span className="text-green-500 text-xs font-medium">+2.5%</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">89.2%</h2>
-        </div>
-
-        {/* Avg Payout Time */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Avg Payout Time</span>
-            <span className="text-red-500 text-xs font-medium">-0.3 days</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">1.8 days</h2>
-        </div>
-
-        {/* Customer Satisfaction */}
-        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Customer Satisfaction</span>
-            <span className="text-green-500 text-xs font-medium">+0.2</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">4.6/5</h2>
-        </div>
+        ))}
       </div>
 
-      {/* Middle Row - Top Routes and Support Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top Routes by Demand */}
-        <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-bold text-gray-900 mb-8">Top Routes by Demand</h3>
-          <div className="space-y-8">
-            {[
-              { route: "NYC → London", bookings: 342, revenue: "45,890", progress: 90 },
-              { route: "LA → Tokyo", bookings: 289, revenue: "38,720", progress: 75 },
-              { route: "Miami → Paris", bookings: 234, revenue: "31,560", progress: 60 },
-              { route: "Boston → Berlin", bookings: 198, revenue: "26,730", progress: 50 },
-              { route: "Seattle → Sydney", bookings: 167, revenue: "22,495", progress: 40 },
-            ].map((item, i) => (
-              <div key={i} className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="font-bold text-gray-900">{item.route}</span>
-                  <span className="text-gray-400 font-medium">{item.bookings} bookings</span>
+        {/* Operation Health */}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Operation Health</h3>
+          <div className="divide-y divide-gray-50">
+            {healthMetrics.map((metric, i) => (
+              <div key={i} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
+                <span className="text-gray-600 text-sm">{metric.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-900 text-sm font-bold">{metric.value}</span>
+                  <div className={`w-2 h-2 rounded-full ${metric.status === 'warning' ? 'bg-orange-400' : 'bg-green-500'}`}></div>
                 </div>
-                <Progress value={item.progress} className="h-1.5 bg-gray-100 [&>div]:bg-blue-600" />
-                <span className="text-xs text-gray-400 font-medium tracking-tight">Revenue: ${item.revenue}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Support Performance */}
-        <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-bold text-gray-900 mb-8">Support Performance</h3>
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500 font-medium">Average Response Time</span>
-                <span className="font-bold text-gray-900">2.5 hrs</span>
-              </div>
-              <Progress value={85} className="h-1.5 bg-gray-100 [&>div]:bg-green-500" />
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500 font-medium">First Contact Resolution</span>
-                <span className="font-bold text-gray-900">78%</span>
-              </div>
-              <Progress value={78} className="h-1.5 bg-gray-100 [&>div]:bg-blue-600" />
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500 font-medium">Tickets Resolved</span>
-                <span className="font-bold text-gray-900">1,245 / 1,342</span>
-              </div>
-              <Progress value={92} className="h-1.5 bg-gray-100 [&>div]:bg-purple-600" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Row - Dispute Trends and Financial Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Dispute Trends */}
-        <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-bold text-gray-900 mb-8">Dispute Trends</h3>
-          <div className="space-y-6">
-            {[
-              { label: "Damaged Item", count: 12, progress: 40, color: "bg-orange-500" },
-              { label: "Non-Delivery", count: 8, progress: 30, color: "bg-orange-500" },
-              { label: "Wrong Weight", count: 6, progress: 20, color: "bg-orange-500" },
-              { label: "Payment Issue", count: 4, progress: 15, color: "bg-orange-500" },
-            ].map((item, i) => (
-              <div key={i} className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="font-bold text-gray-900">{item.label}</span>
-                  <span className="text-gray-400 font-medium">{item.count} cases</span>
+        {/* Quick Actions */}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-900 mb-6">Quick Actions</h3>
+          <div className="space-y-3">
+            {quickActions.map((action, i) => (
+              <button key={i} className="w-full flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors group">
+                <div className="flex items-center gap-3">
+                  <action.icon className={`w-5 h-5 ${action.color}`} />
+                  <span className="text-gray-900 font-semibold text-sm">{action.label}</span>
                 </div>
-                <Progress value={item.progress} className={`h-1.5 bg-gray-100 [&>div]:${item.color}`} />
-              </div>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+              </button>
             ))}
           </div>
-        </div>
-
-        {/* Financial Overview */}
-        <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-bold text-gray-900 mb-8">Financial Overview</h3>
-          <div className="space-y-8">
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <span className="text-gray-400 text-xs font-medium">Total Revenue</span>
-                <h2 className="text-2xl font-bold text-gray-900">$248,560</h2>
-              </div>
-              <div className="p-3 bg-green-50 rounded-xl">
-                <TrendingUp className="w-6 h-6 text-green-500" />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <span className="text-gray-400 text-xs font-medium">Commission Earned</span>
-                <h2 className="text-2xl font-bold text-gray-900">$37,284</h2>
-              </div>
-              <div className="p-3 bg-blue-50 rounded-xl">
-                <DollarSign className="w-6 h-6 text-blue-500" />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <span className="text-gray-400 text-xs font-medium">Total Payouts</span>
-                <h2 className="text-2xl font-bold text-gray-900">$211,276</h2>
-              </div>
-              <div className="p-3 bg-purple-50 rounded-xl">
-                <BarChart3 className="w-6 h-6 text-purple-500" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Export Reports */}
-      <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
-        <h3 className="text-lg font-bold text-gray-900 mb-6">Export Reports</h3>
-        <div className="flex flex-wrap gap-4">
-          <button className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700 transition-all shadow-sm">
-            Export as CSV
-          </button>
-          <button className="bg-green-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-green-700 transition-all shadow-sm">
-            Export as PDF
-          </button>
-          <button className="bg-white border border-gray-200 text-gray-600 px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-gray-50 transition-all shadow-sm">
-            Schedule Report
-          </button>
         </div>
       </div>
     </div>

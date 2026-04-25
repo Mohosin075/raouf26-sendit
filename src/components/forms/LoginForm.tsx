@@ -104,77 +104,65 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="bg-white p-8 md:p-10 rounded-[12px] shadow-sm w-full max-w-[480px]">
-            <form onSubmit={handleSubmit(handleLogin)} className="w-full">
-                {/* Header */}
-                <div className="flex flex-col items-center mb-8">
-                    <h1 className="text-[28px] text-center font-normal text-[#1A1A1A] mb-6">
-                        Welcome again.
-                    </h1>
-                    
+        <div className="w-full max-w-[500px] p-6">
+            <div className="text-center mb-10">
+                <h1 className="text-5xl font-bold text-[#2563EB] mb-8">
+                    Sendit Admin
+                </h1>
+                <p className="text-gray-600 text-sm">
+                    Sign in to continue as Admin
+                </p>
+            </div>
 
-                </div>
-
+            <form onSubmit={handleSubmit(handleLogin)} className="space-y-6">
                 {/* Email Field */}
-                <div className="mb-6 space-y-2">
-                    <label className="block text-sm font-medium text-[#1A1A1A]">
+                <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-gray-700">
                         Email
                     </label>
                     <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                             <Mail className="w-5 h-5" />
                         </div>
                         <input 
                             type="email" 
                             {...register("email")} 
-                            placeholder="Enter your @ Email" 
-                            className="w-full pl-12 pr-4 py-3.5 border border-[#1D4ED8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1D4ED8] bg-white placeholder:text-gray-400" 
+                            placeholder="your@email.com" 
+                            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white placeholder:text-gray-300" 
                         />
                     </div>
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
 
                 {/* Password Field */}
-                <div className="mb-6 space-y-2">
-                    <label className="block text-sm font-medium text-[#1A1A1A]">
+                <div className="space-y-2">
+                    <label className="block text-sm font-semibold text-gray-700">
                         Password
                     </label>
                     <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                             <Lock className="w-5 h-5" />
                         </div>
                         <input 
                             type={showPassword ? "text" : "password"} 
                             {...register("password")} 
-                            placeholder="Enter your Password" 
-                            className="w-full pl-12 pr-12 py-3.5 border border-[#1D4ED8] rounded-full focus:outline-none focus:ring-1 focus:ring-[#1D4ED8] bg-white placeholder:text-gray-400" 
+                            placeholder="........" 
+                            className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white placeholder:text-gray-300" 
                         />
                         <button 
                             type="button" 
                             onClick={() => setShowPassword(!showPassword)} 
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         >
                             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                         </button>
                     </div>
-                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+                    {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                 </div>
 
-                {/* Remember Me & Forgot Password */}
-                <div className="flex justify-between items-center mb-10">
-                    <div className="flex items-center">
-                        <input 
-                            type="checkbox" 
-                            id="rememberMe" 
-                            {...register("rememberMe")} 
-                            className="h-4 w-4 rounded border-gray-300 text-[#1D4ED8] focus:ring-[#1D4ED8]" 
-                        />
-                        <label htmlFor="rememberMe" className="ml-2 text-xs text-gray-500">
-                            Rememebr me
-                        </label>
-                    </div>
-                    <Link href="/auth/forgot-password" title="Forgot Password ?" className="text-gray-500 text-xs hover:text-[#1D4ED8] transition-colors">
-                        Forgot Password ?
+                <div className="flex items-center">
+                    <Link href="/auth/forgot-password" title="Forgot Password ?" className="text-gray-700 text-sm font-semibold hover:underline transition-colors">
+                        Forgot Password?
                     </Link>
                 </div>
 
@@ -182,18 +170,18 @@ export default function LoginForm() {
                 <button 
                     type="submit" 
                     disabled={isLoading} 
-                    className="w-full bg-[#0052FF] hover:bg-blue-700 text-white font-semibold text-base py-3.5 px-4 rounded-full transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-blue-200"
+                    className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
                 >
                     {isLoading ? "Logging in..." : "Login"}
                 </button>
 
                 {/* Demo Login Button */}
-                <div className="mt-4 text-center">
+                <div className="pt-2 text-center">
                     <button 
                         type="button" 
                         onClick={handleDemoLogin}
                         disabled={isLoading} 
-                        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm py-2.5 px-4 rounded-full transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                        className="text-blue-600 text-sm font-semibold hover:underline"
                     >
                         {isLoading ? "Logging in..." : "Demo Login"}
                     </button>
