@@ -19,7 +19,7 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Support & Disputes",
-        url: "/messages",
+        url: "/support-disputes",
         icon: MessageSquare,
     },
     {
