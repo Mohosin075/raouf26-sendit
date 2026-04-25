@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Truck, Wallet, Bell, Shield, MessageSquare, Settings, FileText, BarChart2 } from "lucide-react";
+import { LayoutDashboard, Users, Truck, Wallet, Bell, Shield, MessageSquare, Settings, FileText, BarChart2, ShieldCheck } from "lucide-react";
 import { MenuItem, Role } from "@/types/navigation";
 
 const commonMenuItems: MenuItem[] = [
@@ -41,6 +41,11 @@ const commonMenuItems: MenuItem[] = [
         title: "Reports & Analytics",
         url: "/reports-analytics",
         icon: BarChart2,
+    },
+    {
+        title: "Admin Management",
+        url: "/admin-management",
+        icon: ShieldCheck,
     },
     {
         title: "Settings",
