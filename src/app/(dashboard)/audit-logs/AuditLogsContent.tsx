@@ -76,13 +76,13 @@ export default function AuditLogsContent() {
             {/* Audit Trail Banner */}
             <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-xl space-y-2">
                 <h4 className="text-blue-700 font-bold text-sm">Audit Trail</h4>
-                <p className="text-blue-600/80 text-xs font-medium">All administrative actions are logged for security and compliance purposes. Logs are retained for 2 years.</p>
+                <p className="text-blue-700 text-xs font-bold">All administrative actions are logged for security and compliance purposes. Logs are retained for 2 years.</p>
             </div>
 
             {/* Search and Filters */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
                     <Input 
                         placeholder="Search audit logs..." 
                         className="pl-12 h-12 bg-white border-gray-200 rounded-xl focus-visible:ring-blue-600"
@@ -99,12 +99,12 @@ export default function AuditLogsContent() {
                 <table className="w-full text-left">
                     <thead className="bg-gray-50/30 border-b border-gray-50">
                         <tr>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Action</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Admin Name</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Timestamp</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Old Value</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Value</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Reason</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Action</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Admin Name</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Timestamp</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Old Value</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">New Value</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Reason</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -117,27 +117,27 @@ export default function AuditLogsContent() {
                                     <div className="flex flex-col gap-1.5">
                                         <span className="text-sm font-bold text-gray-900">{log.admin}</span>
                                         <Badge className={`${
-                                            log.role.includes('Super') ? 'bg-purple-100 text-purple-600' :
-                                            log.role.includes('Compliance') ? 'bg-blue-100 text-blue-600' :
-                                            log.role.includes('Finance') ? 'bg-green-100 text-green-600' :
-                                            log.role.includes('Operations') ? 'bg-orange-100 text-orange-600' :
-                                            'bg-gray-100 text-gray-600'
+                                            log.role.includes('Super') ? 'bg-purple-100 text-purple-700' :
+                                            log.role.includes('Compliance') ? 'bg-blue-100 text-blue-700' :
+                                            log.role.includes('Finance') ? 'bg-green-100 text-green-700' :
+                                            log.role.includes('Operations') ? 'bg-orange-100 text-orange-700' :
+                                            'bg-gray-100 text-gray-700'
                                         } border-none text-[8px] font-bold px-1.5 py-0 w-fit`}>
                                             {log.role}
                                         </Badge>
                                     </div>
                                 </td>
                                 <td className="px-6 py-5">
-                                    <span className="text-xs text-gray-500 font-medium">{log.timestamp}</span>
+                                    <span className="text-xs text-gray-700 font-bold">{log.timestamp}</span>
                                 </td>
                                 <td className="px-6 py-5">
-                                    <span className="text-sm text-gray-500 font-medium">{log.oldValue}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{log.oldValue}</span>
                                 </td>
                                 <td className="px-6 py-5">
                                     <span className="text-sm font-bold text-gray-900">{log.newValue}</span>
                                 </td>
                                 <td className="px-6 py-5">
-                                    <span className="text-xs text-gray-400 font-medium leading-relaxed">{log.reason}</span>
+                                    <span className="text-xs text-gray-700 font-bold leading-relaxed">{log.reason}</span>
                                 </td>
                             </tr>
                         ))}
@@ -147,7 +147,7 @@ export default function AuditLogsContent() {
 
             {/* Export Actions */}
             <div className="flex justify-end gap-4 pt-4">
-                <Button variant="outline" className="h-12 px-6 rounded-xl border-gray-200 text-gray-600 font-bold text-xs gap-2 shadow-sm">
+                <Button variant="outline" className="h-12 px-6 rounded-xl border-gray-200 text-gray-700 font-bold text-xs gap-2 shadow-sm">
                     Export CSV
                 </Button>
                 <Button className="h-12 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs gap-2 shadow-md">

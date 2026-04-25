@@ -26,11 +26,11 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                 <div className="space-y-4">
                     <h1 className="text-6xl font-black text-gray-900 tracking-tighter">{id}</h1>
                     <div className="flex items-center gap-4">
-                        <Badge className="bg-[#00FF85] text-[#00B67A] hover:bg-[#00FF85] border-none px-4 py-1.5 rounded-full text-xs font-black uppercase">
+                        <Badge className="bg-[#00FF85] text-[#006B48] hover:bg-[#00FF85] border-none px-4 py-1.5 rounded-full text-xs font-black uppercase">
                             IN TRANSIT
                         </Badge>
-                        <span className="text-gray-300 font-medium flex items-center gap-2">
-                            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                        <span className="text-gray-500 font-medium flex items-center gap-2">
+                            <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
                             Expedited Priority
                         </span>
                     </div>
@@ -54,29 +54,29 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                     {/* Info Cards Grid */}
                     <div className="grid grid-cols-2 gap-8">
                         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">SENDER INFORMATION</p>
+                            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">SENDER INFORMATION</p>
                             <h3 className="text-xl font-bold text-gray-900">Sarah Johnson</h3>
-                            <p className="text-sm text-gray-400 mt-1">Certified Platinum Member</p>
+                            <p className="text-sm text-gray-600 mt-1">Certified Platinum Member</p>
                         </div>
                         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">TRAVELER ASSIGNED</p>
+                            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">TRAVELER ASSIGNED</p>
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 bg-[#0052FF] rounded-full flex items-center justify-center text-white font-bold text-sm">
                                     UC
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900">Michael Chen</h3>
-                                    <p className="text-sm text-gray-400 mt-1">Rating: 4.9/5.0</p>
+                                    <p className="text-sm text-gray-600 mt-1">Rating: 4.9/5.0</p>
                                 </div>
                             </div>
                         </div>
                         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">CARGO SPECIFICATIONS</p>
-                            <h3 className="text-3xl font-bold text-gray-900">2.5 <span className="text-lg text-gray-400">kg</span></h3>
+                            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">CARGO SPECIFICATIONS</p>
+                            <h3 className="text-3xl font-bold text-gray-900">2.5 <span className="text-lg text-gray-600">kg</span></h3>
                         </div>
                         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">DECLARED VALUATION</p>
-                            <h3 className="text-3xl font-bold text-gray-900">$ 150.00 <span className="text-lg text-gray-400 uppercase">usd</span></h3>
+                            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">DECLARED VALUATION</p>
+                            <h3 className="text-3xl font-bold text-gray-900">$ 150.00 <span className="text-lg text-gray-600 uppercase">usd</span></h3>
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                             {/* Current Location Pin */}
                             <div className="absolute left-[180px] top-[260px] flex flex-col items-center">
                                 <div className="bg-white p-4 rounded-2xl shadow-xl border border-gray-100 min-w-[200px]">
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">CURRENT LOCATION</p>
+                                    <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">CURRENT LOCATION</p>
                                     <p className="text-sm font-bold text-gray-900">Chicago Logistics Hub - Terminal B</p>
                                 </div>
                                 <div className="w-1 h-8 bg-white/50"></div>
@@ -110,7 +110,7 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                             {/* Estimated Delivery Pin */}
                             <div className="absolute right-[160px] top-[180px] text-right">
                                 <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-white/20 min-w-[150px]">
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">ESTIMATED DELIVERY</p>
+                                    <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-1">ESTIMATED DELIVERY</p>
                                     <p className="text-sm font-bold text-gray-900">Oct 24, 2023 - 14:00</p>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                 {/* Right Side - Timeline */}
                 <div className="col-span-12 lg:col-span-4">
                     <div className="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100 h-full">
-                        <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-10">SHIPMENT TIMELINE</h2>
+                        <h2 className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-10">SHIPMENT TIMELINE</h2>
                         
                         <div className="space-y-12 relative">
                             {/* Vertical Line */}
@@ -147,13 +147,13 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                                             </div>
                                         ) : (
                                             <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
-                                                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                                             </div>
                                         )}
                                     </div>
-                                    <div className={step.status === "pending" ? "opacity-30" : ""}>
+                                    <div className={step.status === "pending" ? "opacity-50" : ""}>
                                         <h4 className="text-base font-bold text-gray-900">{step.title}</h4>
-                                        <p className="text-xs font-medium text-gray-400 mt-1">
+                                        <p className="text-xs font-bold text-gray-600 mt-1">
                                             {step.sub && <span className="text-[#0052FF] mr-1">{step.sub} •</span>}
                                             {step.time}
                                         </p>
@@ -169,10 +169,10 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                     <div className="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100 h-full">
                         <div className="flex justify-between items-center mb-8">
                             <div>
-                                <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">SHIPMENT MEDIA</h2>
-                                <p className="text-xs text-gray-400 mt-1">Stored securely in external storage</p>
+                                <h2 className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">SHIPMENT MEDIA</h2>
+                                <p className="text-xs text-gray-600 mt-1">Stored securely in external storage</p>
                             </div>
-                            <Cloud className="text-gray-300 w-6 h-6" />
+                            <Cloud className="text-gray-500 w-6 h-6" />
                         </div>
 
                         <div className="grid grid-cols-12 gap-4">
@@ -188,7 +188,7 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                                 </div>
                             </div>
                             <div className="col-span-4">
-                                <div className="h-32 border-2 border-dashed border-gray-100 rounded-2xl flex items-center justify-center text-gray-400 text-sm font-bold">
+                                <div className="h-32 border-2 border-dashed border-gray-100 rounded-2xl flex items-center justify-center text-gray-600 text-sm font-bold">
                                     + 4 more
                                 </div>
                             </div>
@@ -201,7 +201,7 @@ export default function ShipmentDetailsContent({ id }: { id: string }) {
                                 </div>
                                 <div>
                                     <h4 className="text-sm font-bold text-gray-900">Amazon S3 Repository</h4>
-                                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">SHP-MEDIA-PROD-US-EAST-1</p>
+                                    <p className="text-[10px] text-gray-600 font-bold uppercase tracking-tight">SHP-MEDIA-PROD-US-EAST-1</p>
                                 </div>
                             </div>
                             <Button className="bg-[#0052FF] hover:bg-[#0041CC] text-white rounded-xl px-6 font-bold gap-2">

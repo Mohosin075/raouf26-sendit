@@ -26,14 +26,14 @@ export default function UserManagement() {
             <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
                 <div className="flex gap-4">
                     <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                         <input 
                             type="text" 
                             placeholder="Search by name, email, phone, user ID, parcel ID" 
-                            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder:text-gray-300"
+                            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder:text-gray-500 font-bold"
                         />
                     </div>
-                    <button className="p-2 border border-gray-200 rounded-lg text-gray-400 hover:bg-gray-50">
+                    <button className="p-2 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50">
                         <Filter className="w-5 h-5" />
                     </button>
                     <div className="w-20 border border-gray-200 rounded-lg"></div>
@@ -45,13 +45,13 @@ export default function UserManagement() {
                 <table className="w-full text-left">
                     <thead className="bg-[#F8FAFC] border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">User Name</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Email</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Role</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Verification</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Wallet Balance</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Actions</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">User Name</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Email</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Role</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Status</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Verification</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Wallet Balance</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -60,18 +60,18 @@ export default function UserManagement() {
                                 <td className="px-6 py-4">
                                     <div className="flex flex-col">
                                         <span className="text-sm font-bold text-gray-900">{user.name}</span>
-                                        <span className="text-xs text-gray-400 font-medium">{user.userId}</span>
+                                        <span className="text-xs text-gray-700 font-bold">{user.userId}</span>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="text-sm text-gray-500 font-medium">{user.email}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{user.email}</span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="text-sm text-gray-500 font-medium">{user.role}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{user.role}</span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <Badge className={`
-                                        ${user.status === 'Active' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-400'} 
+                                        ${user.status === 'Active' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'} 
                                         border-none text-[10px] font-bold px-3 py-0.5 rounded-full
                                     `}>
                                         {user.status}
@@ -79,9 +79,9 @@ export default function UserManagement() {
                                 </td>
                                 <td className="px-6 py-4">
                                     <Badge className={`
-                                        ${user.verification === 'Verified' ? 'bg-green-50 text-green-600' : 
-                                          user.verification === 'Pending' ? 'bg-yellow-50 text-yellow-500' : 
-                                          'bg-red-50 text-red-400'} 
+                                        ${user.verification === 'Verified' ? 'bg-green-50 text-green-700' : 
+                                          user.verification === 'Pending' ? 'bg-amber-50 text-amber-700' : 
+                                          'bg-red-50 text-red-700'} 
                                         border-none text-[10px] font-bold px-3 py-0.5 rounded-full
                                     `}>
                                         {user.verification}
@@ -91,7 +91,7 @@ export default function UserManagement() {
                                     <span className="text-sm font-bold text-gray-900">{user.walletBalance}</span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <Link href={`/users-management/${user.id}`} className="text-blue-600 text-sm font-semibold hover:underline">
+                                    <Link href={`/users-management/${user.id}`} className="text-blue-700 text-sm font-semibold hover:underline">
                                         View
                                     </Link>
                                 </td>

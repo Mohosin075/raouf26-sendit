@@ -57,10 +57,10 @@ export default function SupportDisputesContent() {
             <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
                 <div className="flex gap-4">
                     <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                         <Input 
                             placeholder="Search tickets..." 
-                            className="pl-10 h-11 bg-white border-gray-200 focus:ring-blue-500 rounded-lg"
+                            className="pl-10 h-11 bg-white border-gray-200 focus:ring-blue-500 rounded-lg placeholder:text-gray-500"
                         />
                     </div>
                     <div className="w-24 h-11 border border-gray-200 rounded-lg"></div>
@@ -72,14 +72,14 @@ export default function SupportDisputesContent() {
                 <table className="w-full text-left">
                     <thead className="bg-[#F8FAFC] border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Ticket ID</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">User</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Issue Type</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Priority</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Assigned To</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">SLA Timer</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-right">Actions</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Ticket ID</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">User</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Issue Type</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Priority</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Status</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">Assigned To</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">SLA Timer</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -96,9 +96,9 @@ export default function SupportDisputesContent() {
                                 </td>
                                 <td className="px-6 py-4">
                                     <Badge className={`
-                                        ${ticket.priority === 'HIGH' ? 'bg-[#FF3B30]/10 text-[#FF3B30]' : 
-                                          ticket.priority === 'MEDIUM' ? 'bg-[#FFCC00]/10 text-[#FFCC00]' : 
-                                          'bg-[#007AFF]/10 text-[#007AFF]'} 
+                                        ${ticket.priority === 'HIGH' ? 'bg-red-50 text-red-700' : 
+                                          ticket.priority === 'MEDIUM' ? 'bg-amber-50 text-amber-700' : 
+                                          'bg-blue-50 text-blue-700'} 
                                         border-none text-[10px] font-bold px-3 py-0.5 rounded-full
                                     `}>
                                         {ticket.priority}
@@ -106,9 +106,9 @@ export default function SupportDisputesContent() {
                                 </td>
                                 <td className="px-6 py-4">
                                     <Badge className={`
-                                        ${ticket.status === 'Pending' ? 'bg-[#FFCC00]/10 text-[#D4AF37]' : 
-                                          ticket.status === 'Active' ? 'bg-[#34C759]/10 text-[#34C759]' : 
-                                          'bg-[#34C759]/10 text-[#34C759]'} 
+                                        ${ticket.status === 'Pending' ? 'bg-amber-50 text-amber-700' : 
+                                          ticket.status === 'Active' ? 'bg-green-50 text-green-700' : 
+                                          'bg-green-50 text-green-700'} 
                                         border-none text-[10px] font-bold px-3 py-0.5 rounded-full
                                     `}>
                                         {ticket.status}
@@ -117,7 +117,7 @@ export default function SupportDisputesContent() {
                                 <td className="px-6 py-4 text-sm text-gray-600 font-medium">
                                     {ticket.assignedTo}
                                 </td>
-                                <td className="px-6 py-4 text-sm text-gray-500 font-medium">
+                                <td className="px-6 py-4 text-sm text-gray-700 font-bold">
                                     {ticket.slaTimer}
                                 </td>
                                 <td className="px-6 py-4">

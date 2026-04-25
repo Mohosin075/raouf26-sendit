@@ -14,7 +14,7 @@ const StatCard: React.FC<StatCardProps> = ({
   return (
     <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-50 flex flex-col justify-between h-40">
       <div className="flex justify-between items-start">
-        <span className="text-gray-400 text-sm font-medium">{title}</span>
+        <span className="text-gray-500 text-sm font-medium">{title}</span>
         <span className={`text-xs font-bold ${trendColor}`}>{trend}</span>
       </div>
       <div className="flex justify-between items-end">

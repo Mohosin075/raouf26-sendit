@@ -51,11 +51,11 @@ export default function AnalyticsContent() {
                     <Card key={i} className="border border-gray-100 shadow-sm rounded-xl">
                         <CardContent className="p-6">
                             <div className="mb-2">
-                                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">{stat.label}</span>
+                                <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">{stat.label}</span>
                             </div>
                             <div className="flex justify-between items-end">
                                 <span className="text-3xl font-bold text-gray-900">{stat.value}</span>
-                                <span className={`text-[10px] font-bold ${stat.trendType === 'up' ? 'text-green-500' : 'text-red-500'}`}>
+                                <span className={`text-[10px] font-bold ${stat.trendType === 'up' ? 'text-green-700' : 'text-red-700'}`}>
                                     {stat.trend}
                                 </span>
                             </div>
@@ -75,10 +75,10 @@ export default function AnalyticsContent() {
                                 <div key={i} className="space-y-2">
                                     <div className="flex justify-between items-center text-sm">
                                         <span className="font-bold text-gray-900">{item.route}</span>
-                                        <span className="text-gray-500">{item.bookings} bookings</span>
+                                        <span className="text-gray-700 font-bold">{item.bookings} bookings</span>
                                     </div>
-                                    <Progress value={item.progress} className="h-2 bg-gray-100" indicatorClassName="bg-blue-600" />
-                                    <p className="text-xs text-gray-400">Revenue: {item.revenue}</p>
+                                    <Progress value={item.progress} className="h-2 bg-gray-100" indicatorClassName="bg-blue-700" />
+                                    <p className="text-xs text-gray-700 font-bold">Revenue: {item.revenue}</p>
                                 </div>
                             ))}
                         </div>
@@ -93,7 +93,7 @@ export default function AnalyticsContent() {
                             {supportPerformance.map((item, i) => (
                                 <div key={i} className="space-y-3">
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-gray-500">{item.label}</span>
+                                        <span className="text-gray-700 font-bold">{item.label}</span>
                                         <span className="font-bold text-gray-900">{item.value}</span>
                                     </div>
                                     <Progress value={item.progress} className="h-2 bg-gray-100" indicatorClassName={item.color} />
@@ -112,7 +112,7 @@ export default function AnalyticsContent() {
                                 <div key={i} className="space-y-2">
                                     <div className="flex justify-between items-center text-sm">
                                         <span className="font-bold text-gray-900">{item.label}</span>
-                                        <span className="text-gray-500">{item.cases} cases</span>
+                                        <span className="text-gray-700 font-bold">{item.cases} cases</span>
                                     </div>
                                     <Progress value={item.progress} className="h-1.5 bg-gray-100" indicatorClassName={item.color} />
                                 </div>
@@ -128,29 +128,29 @@ export default function AnalyticsContent() {
                         <div className="space-y-8">
                             <div className="flex justify-between items-center">
                                 <div className="space-y-1">
-                                    <p className="text-sm text-gray-500">Total Revenue</p>
+                                    <p className="text-sm text-gray-700 font-bold">Total Revenue</p>
                                     <p className="text-2xl font-bold text-gray-900">$248,560</p>
                                 </div>
                                 <div className="p-2 rounded-lg">
-                                    <TrendingUp className="w-6 h-6 text-green-500" />
+                                    <TrendingUp className="w-6 h-6 text-green-700" />
                                 </div>
                             </div>
                             <div className="flex justify-between items-center">
                                 <div className="space-y-1">
-                                    <p className="text-sm text-gray-500">Commission Earned</p>
+                                    <p className="text-sm text-gray-700 font-bold">Commission Earned</p>
                                     <p className="text-2xl font-bold text-gray-900">$37,284</p>
                                 </div>
                                 <div className="p-2 rounded-lg">
-                                    <DollarSign className="w-6 h-6 text-blue-500" />
+                                    <DollarSign className="w-6 h-6 text-blue-700" />
                                 </div>
                             </div>
                             <div className="flex justify-between items-center">
                                 <div className="space-y-1">
-                                    <p className="text-sm text-gray-500">Total Payouts</p>
+                                    <p className="text-sm text-gray-700 font-bold">Total Payouts</p>
                                     <p className="text-2xl font-bold text-gray-900">$211,276</p>
                                 </div>
                                 <div className="p-2 rounded-lg">
-                                    <BarChart3 className="w-6 h-6 text-purple-500" />
+                                    <BarChart3 className="w-6 h-6 text-purple-700" />
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@ export default function AnalyticsContent() {
                 <div className="flex flex-wrap gap-4">
                     <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6">Export as CSV</Button>
                     <Button className="bg-green-600 hover:bg-green-700 text-white px-6">Export as PDF</Button>
-                    <Button variant="outline" className="border-gray-200 text-gray-600 px-6">Schedule Report</Button>
+                    <Button variant="outline" className="border-gray-200 text-gray-700 px-6 font-bold">Schedule Report</Button>
                 </div>
             </div>
         </div>

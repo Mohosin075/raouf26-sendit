@@ -33,18 +33,18 @@ export default function NotificationsComponent() {
 
     const getStatusBadgeClass = (status: string) => {
         switch (status.toLowerCase()) {
-            case 'sent': return 'bg-green-50 text-green-600 border-none px-4 py-1 rounded-full text-[10px] font-bold';
-            case 'pending': return 'bg-yellow-50 text-yellow-600 border-none px-4 py-1 rounded-full text-[10px] font-bold';
-            case 'failed': return 'bg-red-50 text-red-600 border-none px-4 py-1 rounded-full text-[10px] font-bold';
-            default: return 'bg-gray-50 text-gray-600 border-none px-4 py-1 rounded-full text-[10px] font-bold';
+            case 'sent': return 'bg-green-50 text-green-700 border-none px-4 py-1 rounded-full text-[10px] font-bold';
+            case 'pending': return 'bg-amber-50 text-amber-700 border-none px-4 py-1 rounded-full text-[10px] font-bold';
+            case 'failed': return 'bg-red-50 text-red-700 border-none px-4 py-1 rounded-full text-[10px] font-bold';
+            default: return 'bg-gray-50 text-gray-700 border-none px-4 py-1 rounded-full text-[10px] font-bold';
         }
     };
 
     const getTypeIcon = (type: string) => {
         switch (type.toLowerCase()) {
-            case 'email': return <Mail className="w-4 h-4 text-blue-500" />;
-            case 'sms': return <MessageSquare className="w-4 h-4 text-green-500" />;
-            case 'push': return <Bell className="w-4 h-4 text-purple-500" />;
+            case 'email': return <Mail className="w-4 h-4 text-blue-700" />;
+            case 'sms': return <MessageSquare className="w-4 h-4 text-green-700" />;
+            case 'push': return <Bell className="w-4 h-4 text-purple-700" />;
             default: return null;
         }
     };
@@ -65,7 +65,7 @@ export default function NotificationsComponent() {
                             <div className="p-2 rounded-lg bg-gray-50">
                                 {stat.icon}
                             </div>
-                            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{stat.label}</p>
+                            <p className="text-xs text-gray-600 font-bold uppercase tracking-wider">{stat.label}</p>
                         </div>
                         <p className="text-3xl font-bold text-gray-900">{stat.count}</p>
                     </div>
@@ -74,10 +74,10 @@ export default function NotificationsComponent() {
 
             {/* Search */}
             <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
                 <Input 
                     placeholder="Search notifications..." 
-                    className="pl-10 bg-white border border-gray-200 rounded-xl h-12 shadow-sm focus-visible:ring-blue-600" 
+                    className="pl-10 bg-white border border-gray-200 rounded-xl h-12 shadow-sm focus-visible:ring-blue-600 font-bold placeholder:text-gray-500" 
                 />
             </div>
 
@@ -86,12 +86,12 @@ export default function NotificationsComponent() {
                 <table className="w-full text-left">
                     <thead className="bg-gray-50/50 border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">ID</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">MESSAGE TYPE</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">MESSAGE</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">TRIGGER EVENT</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">STATUS</th>
-                            <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-right">DATE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">ID</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">MESSAGE TYPE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">MESSAGE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">TRIGGER EVENT</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">STATUS</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">DATE</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -101,16 +101,16 @@ export default function NotificationsComponent() {
                                     <span className="text-sm font-bold text-gray-900">{notif.id}</span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                    <div className="flex items-center gap-2 text-sm text-gray-700 font-bold">
                                         {getTypeIcon(notif.type)}
                                         {notif.type}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="text-sm text-gray-600">{notif.message}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{notif.message}</span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className="text-sm text-gray-600">{notif.trigger}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{notif.trigger}</span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={getStatusBadgeClass(notif.status)}>
@@ -118,7 +118,7 @@ export default function NotificationsComponent() {
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 text-right">
-                                    <span className="text-sm text-gray-600">{notif.date}</span>
+                                    <span className="text-sm text-gray-700 font-bold">{notif.date}</span>
                                 </td>
                             </tr>
                         ))}

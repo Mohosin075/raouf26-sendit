@@ -18,14 +18,14 @@ import {
 
 export default function DashboardContent() {
   const stats = [
-    { label: "Total Users", value: "12,847", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
-    { label: "Active Trips", value: "342", icon: Truck, color: "text-green-600", bg: "bg-green-50" },
-    { label: "Active Shipments", value: "1,284", icon: Package, color: "text-purple-600", bg: "bg-purple-50" },
-    { label: "Pending Verifications", value: "87", icon: CheckCircle2, color: "text-orange-500", bg: "bg-orange-50" },
-    { label: "Open Disputes", value: "23", icon: AlertTriangle, color: "text-orange-600", bg: "bg-orange-50" },
-    { label: "Pending Payouts", value: "$48,290", icon: DollarSign, color: "text-green-600", bg: "bg-green-50" },
-    { label: "Failed Payments", value: "12", icon: XCircle, color: "text-red-600", bg: "bg-red-50" },
-    { label: "System Alerts", value: "5", icon: Bell, color: "text-red-500", bg: "bg-red-50" },
+    { label: "Total Users", value: "12,847", icon: Users, color: "text-blue-700", bg: "bg-blue-50" },
+    { label: "Active Trips", value: "342", icon: Truck, color: "text-green-700", bg: "bg-green-50" },
+    { label: "Active Shipments", value: "1,284", icon: Package, color: "text-purple-700", bg: "bg-purple-50" },
+    { label: "Pending Verifications", value: "87", icon: CheckCircle2, color: "text-orange-700", bg: "bg-orange-50" },
+    { label: "Open Disputes", value: "23", icon: AlertTriangle, color: "text-orange-700", bg: "bg-orange-50" },
+    { label: "Pending Payouts", value: "$48,290", icon: DollarSign, color: "text-green-700", bg: "bg-green-50" },
+    { label: "Failed Payments", value: "12", icon: XCircle, color: "text-red-700", bg: "bg-red-50" },
+    { label: "System Alerts", value: "5", icon: Bell, color: "text-red-700", bg: "bg-red-50" },
   ];
 
   const healthMetrics = [
@@ -36,10 +36,10 @@ export default function DashboardContent() {
   ];
 
   const quickActions = [
-    { label: "Review KYC", icon: Users, color: "text-blue-600" },
-    { label: "Review Withdrawals", icon: Wallet, color: "text-blue-600" },
-    { label: "Open Support Tickets", icon: MessageSquare, color: "text-blue-600" },
-    { label: "Monitor Risk Alerts", icon: ShieldCheck, color: "text-blue-600" },
+    { label: "Review KYC", icon: Users, color: "text-blue-700" },
+    { label: "Review Withdrawals", icon: Wallet, color: "text-blue-700" },
+    { label: "Open Support Tickets", icon: MessageSquare, color: "text-blue-700" },
+    { label: "Monitor Risk Alerts", icon: ShieldCheck, color: "text-blue-700" },
   ];
 
   return (
@@ -57,10 +57,10 @@ export default function DashboardContent() {
               <stat.icon className={`w-5 h-5 ${stat.color}`} />
             </div>
             <div className="space-y-1">
-              <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
+              <p className="text-gray-700 text-sm font-bold">{stat.label}</p>
               <h2 className="text-2xl font-bold text-gray-900">{stat.value}</h2>
             </div>
-            <button className="text-blue-600 text-xs font-semibold flex items-center gap-1 hover:underline">
+            <button className="text-blue-700 text-xs font-bold flex items-center gap-1 hover:underline">
               View Details <ArrowRight className="w-3 h-3" />
             </button>
           </div>
@@ -74,10 +74,10 @@ export default function DashboardContent() {
           <div className="divide-y divide-gray-50">
             {healthMetrics.map((metric, i) => (
               <div key={i} className="py-4 flex items-center justify-between first:pt-0 last:pb-0">
-                <span className="text-gray-600 text-sm">{metric.label}</span>
+                <span className="text-gray-700 text-sm font-bold">{metric.label}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-900 text-sm font-bold">{metric.value}</span>
-                  <div className={`w-2 h-2 rounded-full ${metric.status === 'warning' ? 'bg-orange-400' : 'bg-green-500'}`}></div>
+                  <div className={`w-2 h-2 rounded-full ${metric.status === 'warning' ? 'bg-orange-500' : 'bg-green-600'}`}></div>
                 </div>
               </div>
             ))}
@@ -92,9 +92,9 @@ export default function DashboardContent() {
               <button key={i} className="w-full flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors group">
                 <div className="flex items-center gap-3">
                   <action.icon className={`w-5 h-5 ${action.color}`} />
-                  <span className="text-gray-900 font-semibold text-sm">{action.label}</span>
+                  <span className="text-gray-900 font-bold text-sm">{action.label}</span>
                 </div>
-                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-blue-700 transition-colors" />
               </button>
             ))}
           </div>

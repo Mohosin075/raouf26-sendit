@@ -160,10 +160,10 @@ export default function MessagesPage() {
                 <div className="border-b border-border p-4">
                     <div className="flex items-center gap-2">
                         <SidebarTrigger className="md:hidden block" />
-                        <h1 className="text-xl font-bold text-foreground">Messages</h1>
+                        <h1 className="text-xl font-bold text-gray-900">Messages</h1>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">Contact attendees</p>
-                    <Badge className="mt-2" variant="secondary">
+                    <p className="text-sm text-gray-700 mt-1 font-bold">Contact attendees</p>
+                    <Badge className="mt-2 bg-blue-50 text-blue-700 hover:bg-blue-100 border-none font-bold" variant="secondary">
                         {unreadCount} unread
                     </Badge>
                 </div>
@@ -171,18 +171,18 @@ export default function MessagesPage() {
                 {/* Search and Filter */}
                 <div className="p-3 border-b border-border space-y-3">
                     <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-9 bg-muted" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+                        <Input placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-9 bg-gray-50 border-gray-200 font-bold placeholder:text-gray-500" />
                     </div>
 
                     <Select value={filter} onValueChange={setFilter}>
-                        <SelectTrigger className="w-full bg-muted">
+                        <SelectTrigger className="w-full bg-gray-50 border-gray-200 font-bold text-gray-700">
                             <SelectValue placeholder="Filter" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">All Messages</SelectItem>
-                            <SelectItem value="unread">Unread</SelectItem>
-                            <SelectItem value="read">Read</SelectItem>
+                            <SelectItem value="all" className="font-bold">All Messages</SelectItem>
+                            <SelectItem value="unread" className="font-bold">Unread</SelectItem>
+                            <SelectItem value="read" className="font-bold">Read</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -191,25 +191,25 @@ export default function MessagesPage() {
                 <div className="flex-1 overflow-y-auto">
                     {filteredMessages.length === 0 ? (
                         <div className="p-6 text-center">
-                            <MessageCircle className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-                            <p className="text-muted-foreground">No messages found</p>
+                            <MessageCircle className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+                            <p className="text-gray-600 font-bold">No messages found</p>
                         </div>
                     ) : (
                         filteredMessages.map((message) => (
-                            <div key={message.id} onClick={() => handleSelectMessage(message.id)} className={`p-3 border-b border-border cursor-pointer hover:bg-muted/50 ${selectedMessage === message.id ? "bg-muted" : ""}`}>
+                            <div key={message.id} onClick={() => handleSelectMessage(message.id)} className={`p-3 border-b border-border cursor-pointer transition-colors ${selectedMessage === message.id ? "bg-blue-50/50" : "hover:bg-gray-50"}`}>
                                 <div className="flex items-start gap-3">
                                     <Avatar className="h-10 w-10">
-                                        <AvatarFallback className="bg-muted text-foreground">{message.initials}</AvatarFallback>
+                                        <AvatarFallback className="bg-gray-100 text-gray-700 font-bold">{message.initials}</AvatarFallback>
                                     </Avatar>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <h3 className="font-medium text-foreground truncate">{message.name}</h3>
+                                            <h3 className={`font-bold truncate ${message.unread ? "text-gray-900" : "text-gray-700"}`}>{message.name}</h3>
                                             <div className="flex items-center gap-2">
-                                                {message.unread && <div className="w-2 h-2 rounded-full bg-blue-500" />}
-                                                <span className="text-xs text-muted-foreground">{message.timestamp}</span>
+                                                {message.unread && <div className="w-2 h-2 rounded-full bg-blue-600" />}
+                                                <span className="text-[10px] font-bold text-gray-600 uppercase tracking-tight">{message.timestamp}</span>
                                             </div>
                                         </div>
-                                        <p className="text-sm text-muted-foreground truncate">{message.preview}</p>
+                                        <p className={`text-xs truncate font-bold ${message.unread ? "text-gray-800" : "text-gray-600"}`}>{message.preview}</p>
                                     </div>
                                 </div>
                             </div>
@@ -219,30 +219,30 @@ export default function MessagesPage() {
             </div>
 
             {/* Right Panel - Chat */}
-            <div className="flex-1 flex flex-col bg-background">
+            <div className="flex-1 flex flex-col bg-white">
                 {selectedAttendee ? (
                     <>
                         <div className="border-b border-border p-4">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Avatar className="h-10 w-10">
-                                        <AvatarFallback className="bg-muted text-foreground">{selectedAttendee.initials}</AvatarFallback>
+                                        <AvatarFallback className="bg-gray-100 text-gray-700 font-bold">{selectedAttendee.initials}</AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <h2 className="font-semibold text-foreground">{selectedAttendee.name}</h2>
-                                        <p className="text-xs text-muted-foreground">Last message: {selectedAttendee.timestamp}</p>
+                                        <h2 className="font-bold text-gray-900">{selectedAttendee.name}</h2>
+                                        <p className="text-[10px] font-bold text-gray-600 uppercase">Last message: {selectedAttendee.timestamp}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Chat Messages */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                        <div className="flex-1 overflow-y-auto p-4 space-y-4">
                             {currentChat.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                                    <div className={`max-w-[80%] rounded-lg px-3 py-2 ${msg.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}>
-                                        <p className="text-sm">{msg.text}</p>
-                                        <p className="text-xs opacity-70 mt-1">{msg.timestamp}</p>
+                                    <div className={`max-w-[80%] rounded-2xl px-4 py-2 shadow-sm ${msg.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"}`}>
+                                        <p className="text-sm font-bold leading-relaxed">{msg.text}</p>
+                                        <p className={`text-[10px] font-bold mt-1 uppercase ${msg.sender === "user" ? "text-blue-100" : "text-gray-600"}`}>{msg.timestamp}</p>
                                     </div>
                                 </div>
                             ))}
@@ -250,10 +250,10 @@ export default function MessagesPage() {
                         </div>
 
                         {/* Message Input */}
-                        <div className="border-t border-border p-4">
-                            <div className="flex items-center gap-2">
-                                <Input placeholder="Type a message..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} onKeyDown={handleKeyPress} className="flex-1 bg-muted" />
-                                <Button onClick={handleSendMessage} size="sm" className="gap-2 bg-foreground text-background hover:opacity-90" disabled={!messageInput.trim()}>
+                        <div className="border-t border-border p-4 bg-gray-50/50">
+                            <div className="flex items-center gap-3">
+                                <Input placeholder="Type a message..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} onKeyDown={handleKeyPress} className="flex-1 bg-white border-gray-200 h-11 font-bold placeholder:text-gray-500" />
+                                <Button onClick={handleSendMessage} size="default" className="gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 h-11 font-bold shadow-md" disabled={!messageInput.trim()}>
                                     <Send className="w-4 h-4" />
                                     Send
                                 </Button>
@@ -261,12 +261,12 @@ export default function MessagesPage() {
                         </div>
                     </>
                 ) : (
-                    <div className="flex-1 flex flex-col items-center justify-center p-6">
-                        <div className="w-20 h-20 rounded-lg bg-muted flex items-center justify-center mb-4">
-                            <MessageCircle className="w-10 h-10 text-muted-foreground" />
+                    <div className="flex-1 flex flex-col items-center justify-center p-6 bg-gray-50/30">
+                        <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
+                            <MessageCircle className="w-10 h-10 text-gray-400" />
                         </div>
-                        <h2 className="text-lg font-semibold text-foreground mb-2">Select a conversation</h2>
-                        <p className="text-sm text-muted-foreground text-center">Choose from the list to start messaging</p>
+                        <h2 className="text-lg font-bold text-gray-900 mb-2">Select a conversation</h2>
+                        <p className="text-sm text-gray-600 font-bold text-center">Choose from the list to start messaging</p>
                     </div>
                 )}
             </div>

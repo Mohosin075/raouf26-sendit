@@ -12,9 +12,9 @@ const lora = Lora({
 export const metadata: Metadata = {
     title: {
         template: "%s | Dashboard",
-        default: "Predictcg Dashboard",
+        default: "Sendit Dashboard",
     },
-    description: "Predictcg Dashboard",
+    description: "Sendit Dashboard",
 };
 
 export default function RootLayout({

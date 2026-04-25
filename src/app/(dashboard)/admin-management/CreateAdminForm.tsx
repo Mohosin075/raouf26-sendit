@@ -95,7 +95,7 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
             {/* Title */}
             <div className="space-y-1">
                 <h1 className="text-3xl font-bold text-gray-900">Initialize Admin Profile</h1>
-                <p className="text-gray-500">Provision credentials and define granular access controls for new logistics personnel.</p>
+                <p className="text-gray-600">Provision credentials and define granular access controls for new logistics personnel.</p>
             </div>
 
             {/* Personal Information */}
@@ -108,15 +108,15 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Full Name</Label>
+                        <Label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Full Name</Label>
                         <Input placeholder="e.g. Jonathan Harker" className="h-12 bg-gray-100/50 border-none rounded-xl px-4" />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email Address</Label>
+                        <Label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Email Address</Label>
                         <Input placeholder="j.harker@sendit.com" className="h-12 bg-gray-100/50 border-none rounded-xl px-4" />
                     </div>
                     <div className="md:col-span-2 space-y-2">
-                        <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phone Number</Label>
+                        <Label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Phone Number</Label>
                         <Input placeholder="+1 (555) 000-0000" className="h-12 bg-gray-100/50 border-none rounded-xl px-4" />
                     </div>
                 </div>
@@ -141,12 +141,12 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
                                 : "border-gray-50 bg-white hover:border-gray-100"
                             }`}
                         >
-                            <div className={`${selectedRole === role.title ? "text-blue-600" : "text-gray-400"}`}>
+                            <div className={`${selectedRole === role.title ? "text-blue-600" : "text-gray-600"}`}>
                                 {role.icon}
                             </div>
                             <div className="space-y-1">
                                 <h3 className="text-sm font-bold text-gray-900">{role.title}</h3>
-                                <p className="text-[11px] text-gray-400 leading-relaxed">{role.description}</p>
+                                <p className="text-[11px] text-gray-600 leading-relaxed">{role.description}</p>
                             </div>
                         </div>
                     ))}
@@ -174,7 +174,7 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
                                     </div>
                                     <div className="space-y-0.5">
                                         <h3 className="text-sm font-bold text-gray-900">{module.title}</h3>
-                                        <p className="text-[11px] text-gray-400">{module.description}</p>
+                                        <p className="text-[11px] text-gray-600">{module.description}</p>
                                     </div>
                                 </div>
                                 <div 
@@ -206,14 +206,14 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
                         <CardContent className="p-6 flex items-center justify-between">
                             <div className="space-y-1">
                                 <h3 className="text-sm font-bold text-gray-900">Enforce 2FA Authentication</h3>
-                                <p className="text-[11px] text-gray-400">Mandatory two-factor verification via Sendit OTP or Authenticator app.</p>
+                                <p className="text-[11px] text-gray-600">Mandatory two-factor verification via Sendit OTP or Authenticator app.</p>
                             </div>
                             <Switch defaultChecked />
                         </CardContent>
                     </Card>
 
                     <div className="space-y-2">
-                        <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Temporary Password</Label>
+                        <Label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Temporary Password</Label>
                         <div className="relative">
                             <Input 
                                 type={showPassword ? "text" : "password"}
@@ -222,12 +222,12 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
                             />
                             <button 
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                             >
                                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                             </button>
                         </div>
-                        <p className="text-[10px] text-gray-400">User will be prompted to change this upon first login.</p>
+                        <p className="text-[10px] text-gray-600">User will be prompted to change this upon first login.</p>
                     </div>
                 </div>
             </div>
@@ -236,7 +236,7 @@ export default function CreateAdminForm({ onClose }: CreateAdminFormProps) {
             <div className="pt-8 border-t border-gray-100 flex justify-end gap-6 items-center">
                 <button 
                     onClick={onClose}
-                    className="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors"
+                    className="text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors"
                 >
                     Cancel
                 </button>

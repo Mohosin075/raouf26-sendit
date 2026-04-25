@@ -65,7 +65,7 @@ export default function ModerationPage() {
                         </div>
                         <div>
                             <p className="text-2xl font-bold text-gray-900">{stat.count}</p>
-                            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{stat.label}</p>
+                            <p className="text-xs text-gray-700 font-bold uppercase tracking-wider">{stat.label}</p>
                         </div>
                     </div>
                 ))}
@@ -86,15 +86,15 @@ export default function ModerationPage() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="font-bold text-gray-900">{user.name}</h3>
-                                        <p className="text-xs text-gray-400">{user.id}</p>
+                                        <p className="text-xs text-gray-700 font-bold">{user.id}</p>
                                     </div>
-                                    <Badge className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
+                                    <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
                                 </div>
-                                <p className="text-sm text-gray-500">{user.reason}</p>
+                                <p className="text-sm text-gray-700 font-bold">{user.reason}</p>
                                 <div className="flex gap-4 pt-2">
-                                    <button className="text-xs font-bold text-blue-600 hover:underline">Review</button>
-                                    <button className="text-xs font-bold text-green-600 hover:underline">Clear Risk</button>
-                                    <button className="text-xs font-bold text-red-600 hover:underline">Blacklist</button>
+                                    <button className="text-xs font-bold text-blue-700 hover:underline">Review</button>
+                                    <button className="text-xs font-bold text-green-700 hover:underline">Clear Risk</button>
+                                    <button className="text-xs font-bold text-red-700 hover:underline">Blacklist</button>
                                 </div>
                             </div>
                         ))}
@@ -114,15 +114,15 @@ export default function ModerationPage() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="font-bold text-gray-900">{shipment.route}</h3>
-                                        <p className="text-xs text-gray-400">{shipment.id}</p>
+                                        <p className="text-xs text-gray-700 font-bold">{shipment.id}</p>
                                     </div>
-                                    <Badge className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
+                                    <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
                                 </div>
-                                <p className="text-sm text-gray-500">{shipment.reason}</p>
+                                <p className="text-sm text-gray-700 font-bold">{shipment.reason}</p>
                                 <div className="flex gap-4 pt-2">
-                                    <button className="text-xs font-bold text-blue-600 hover:underline">Review</button>
-                                    <button className="text-xs font-bold text-green-600 hover:underline">Clear Risk</button>
-                                    <button className="text-xs font-bold text-red-600 hover:underline">Blacklist</button>
+                                    <button className="text-xs font-bold text-blue-700 hover:underline">Review</button>
+                                    <button className="text-xs font-bold text-green-700 hover:underline">Clear Risk</button>
+                                    <button className="text-xs font-bold text-red-700 hover:underline">Blacklist</button>
                                 </div>
                             </div>
                         ))}
@@ -132,9 +132,9 @@ export default function ModerationPage() {
                 {/* Failed KYC */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-2">
-                        <XCircle className="w-4 h-4 text-yellow-600" />
+                        <XCircle className="w-4 h-4 text-amber-700" />
                         <h2 className="text-lg font-bold text-gray-900">Failed KYC</h2>
-                        <Badge className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50 border-none px-2 py-0 text-[10px] font-bold">23 items</Badge>
+                        <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-2 py-0 text-[10px] font-bold">23 items</Badge>
                     </div>
                     <div className="space-y-4">
                         {failedKYC.map((kyc, i) => (
@@ -142,15 +142,15 @@ export default function ModerationPage() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="font-bold text-gray-900">{kyc.name}</h3>
-                                        <p className="text-xs text-gray-400">{kyc.id}</p>
+                                        <p className="text-xs text-gray-700 font-bold">{kyc.id}</p>
                                     </div>
-                                    <Badge className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
+                                    <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
                                 </div>
-                                <p className="text-sm text-gray-500">{kyc.reason}</p>
+                                <p className="text-sm text-gray-700 font-bold">{kyc.reason}</p>
                                 <div className="flex gap-4 pt-2">
-                                    <button className="text-xs font-bold text-blue-600 hover:underline">Review</button>
-                                    <button className="text-xs font-bold text-green-600 hover:underline">Clear Risk</button>
-                                    <button className="text-xs font-bold text-red-600 hover:underline">Blacklist</button>
+                                    <button className="text-xs font-bold text-blue-700 hover:underline">Review</button>
+                                    <button className="text-xs font-bold text-green-700 hover:underline">Clear Risk</button>
+                                    <button className="text-xs font-bold text-red-700 hover:underline">Blacklist</button>
                                 </div>
                             </div>
                         ))}
@@ -160,9 +160,9 @@ export default function ModerationPage() {
                 {/* Payment Anomalies */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-purple-500" />
+                        <Shield className="w-4 h-4 text-purple-700" />
                         <h2 className="text-lg font-bold text-gray-900">Payment Anomalies</h2>
-                        <Badge className="bg-yellow-50 text-yellow-700 hover:bg-yellow-50 border-none px-2 py-0 text-[10px] font-bold">5 items</Badge>
+                        <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-2 py-0 text-[10px] font-bold">5 items</Badge>
                     </div>
                     <div className="space-y-4">
                         {paymentAnomalies.map((payment, i) => (
@@ -170,15 +170,15 @@ export default function ModerationPage() {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="font-bold text-gray-900">{payment.amount}</h3>
-                                        <p className="text-xs text-gray-400">{payment.id}</p>
+                                        <p className="text-xs text-gray-700 font-bold">{payment.id}</p>
                                     </div>
-                                    <Badge className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
+                                    <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 border-none px-3 py-1 rounded-full text-[10px] font-bold">Warning</Badge>
                                 </div>
-                                <p className="text-sm text-gray-500">{payment.reason}</p>
+                                <p className="text-sm text-gray-700 font-bold">{payment.reason}</p>
                                 <div className="flex gap-4 pt-2">
-                                    <button className="text-xs font-bold text-blue-600 hover:underline">Review</button>
-                                    <button className="text-xs font-bold text-green-600 hover:underline">Clear Risk</button>
-                                    <button className="text-xs font-bold text-red-600 hover:underline">Blacklist</button>
+                                    <button className="text-xs font-bold text-blue-700 hover:underline">Review</button>
+                                    <button className="text-xs font-bold text-green-700 hover:underline">Clear Risk</button>
+                                    <button className="text-xs font-bold text-red-700 hover:underline">Blacklist</button>
                                 </div>
                             </div>
                         ))}
@@ -191,20 +191,20 @@ export default function ModerationPage() {
                 <h2 className="text-lg font-bold text-gray-900">Risk Settings</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-gray-500 uppercase">High Value Threshold</Label>
-                        <Input defaultValue="1000" className="bg-transparent border-gray-200 rounded-lg h-11" />
+                        <Label className="text-xs font-bold text-gray-700 uppercase">High Value Threshold</Label>
+                        <Input defaultValue="1000" className="bg-transparent border-gray-200 rounded-lg h-11 placeholder:text-gray-500 font-bold" />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-gray-500 uppercase">Max Failed KYC Attempts</Label>
-                        <Input defaultValue="3" className="bg-transparent border-gray-200 rounded-lg h-11" />
+                        <Label className="text-xs font-bold text-gray-700 uppercase">Max Failed KYC Attempts</Label>
+                        <Input defaultValue="3" className="bg-transparent border-gray-200 rounded-lg h-11 placeholder:text-gray-500 font-bold" />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-gray-500 uppercase">Auto-Flag Weight Threshold (kg)</Label>
-                        <Input defaultValue="20" className="bg-transparent border-gray-200 rounded-lg h-11" />
+                        <Label className="text-xs font-bold text-gray-700 uppercase">Auto-Flag Weight Threshold (kg)</Label>
+                        <Input defaultValue="20" className="bg-transparent border-gray-200 rounded-lg h-11 placeholder:text-gray-500 font-bold" />
                     </div>
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-gray-500 uppercase">Rapid Transaction Window (hours)</Label>
-                        <Input defaultValue="24" className="bg-transparent border-gray-200 rounded-lg h-11" />
+                        <Label className="text-xs font-bold text-gray-700 uppercase">Rapid Transaction Window (hours)</Label>
+                        <Input defaultValue="24" className="bg-transparent border-gray-200 rounded-lg h-11 placeholder:text-gray-500 font-bold" />
                     </div>
                 </div>
                 <Button className="bg-[#0052FF] hover:bg-[#0041CC] text-white rounded-lg px-8 h-11 font-bold">

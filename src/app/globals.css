@@ -56,7 +56,7 @@
     --secondary: #eff6ff;
     --secondary-foreground: #1e40af;
     --muted: #F3F4F6;
-    --muted-foreground: #6B7280;
+    --muted-foreground: #4B5563; /* Gray 600 instead of 500 */
     --accent: #eff6ff;
     --accent-foreground: #0052FF;
     --destructive: #FF5A5F;
@@ -69,7 +69,7 @@
     --chart-4: #93c5fd;
     --chart-5: #bfdbfe;
     --sidebar: #ffffff;
-    --sidebar-foreground: #828282;
+    --sidebar-foreground: #4B5563; /* Gray 600 instead of #828282 */
     --sidebar-primary: #0052FF;
     --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: #f8fafc;
