@@ -39,7 +39,7 @@ const commonMenuItems: MenuItem[] = [
     },
     {
         title: "Reports & Analytics",
-        url: "/content-moderation",
+        url: "/reports-analytics",
         icon: BarChart2,
     },
     {
