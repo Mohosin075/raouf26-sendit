@@ -15,9 +15,12 @@ import {
     XCircle,
     Clock,
     RotateCcw,
+    Settings2,
     FileText,
     History,
-    ArrowRight
+    ArrowRight,
+    Info,
+    Eye
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -56,15 +59,67 @@ import {
     SheetTitle,
     SheetDescription,
 } from "@/components/ui/sheet";
+import { 
+    Tabs, 
+    TabsContent, 
+    TabsList, 
+    TabsTrigger 
+} from "@/components/ui/tabs";
+import { 
+    Card, 
+    CardContent, 
+    CardHeader, 
+    CardTitle 
+} from "@/components/ui/card";
+import { 
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function PaymentWalletPage() {
     const [activeTab, setActiveTab] = useState<"transactions" | "withdrawals">("transactions");
     const [showManualAction, setShowManualAction] = useState(false);
     const [manualActionType, setManualActionType] = useState<string>("");
+    const [selectedUserForAction, setSelectedUserForAction] = useState<any>(null);
+    const [userSearchTerm, setUserSearchTerm] = useState("");
     const [showDetails, setShowDetails] = useState(false);
     const [selectedItem, setSelectedItem] = useState<any>(null);
     const [showAuditLogs, setShowAuditLogs] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
+
+    // Mock Users for Search
+    const mockUsers = [
+        { id: "USR001", name: "Sarah Johnson", email: "sarah.j@example.com", balance: "$1,240.00", avatar: "SJ" },
+        { id: "USR002", name: "Emma Williams", email: "emma.w@example.com", balance: "$850.50", avatar: "EW" },
+        { id: "USR003", name: "Michael Chen", email: "m.chen@example.com", balance: "$2,100.00", avatar: "MC" },
+        { id: "USR004", name: "James Martinez", email: "james.m@example.com", balance: "$45.00", avatar: "JM" },
+        { id: "USR005", name: "Robert Wilson", email: "r.wilson@example.com", balance: "$3,420.00", avatar: "RW" },
+    ];
+
+    const filteredUsers = userSearchTerm.length > 1 
+        ? mockUsers.filter(u => 
+            u.name.toLowerCase().includes(userSearchTerm.toLowerCase()) || 
+            u.email.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+            u.id.toLowerCase().includes(userSearchTerm.toLowerCase())
+          )
+        : [];
+
+    const handleManualAction = (type: string, user?: any) => {
+        setManualActionType(type);
+        setSelectedUserForAction(user || null);
+        setUserSearchTerm("");
+        setShowManualAction(true);
+    };
+
+    const handleViewDetails = (item: any) => {
+        setSelectedItem(item);
+        setShowDetails(true);
+    };
 
     const auditLogs = [
         { id: "LOG1", admin: "Admin John", action: "Manual Refund", target: "TXN5431", reason: "Customer error", date: "Apr 19, 2026 10:30 AM", oldValue: "$120.00", newValue: "$0.00 (Refunded)" },
@@ -85,16 +140,6 @@ export default function PaymentWalletPage() {
         { id: "TXN5429", type: "Payment", user: "James Martinez", amount: "$120.00", status: "Failed", date: "Apr 16, 2026", method: "Card", shipmentId: "SHP-6610", sender: "James Martinez", receiver: "Alice Smith", timeline: [{ status: "Initiated", date: "Apr 16, 11:00 AM" }, { status: "Failed", date: "Apr 16, 11:02 AM" }] },
         { id: "TXN5428", type: "Adjustment", user: "Platform Admin", amount: "$10.00", status: "Completed", date: "Apr 15, 2026", method: "Manual", shipmentId: "N/A", sender: "Platform", receiver: "Sarah Johnson", timeline: [{ status: "Manual Adjustment", date: "Apr 15, 03:00 PM" }] },
     ];
-
-    const handleManualAction = (type: string) => {
-        setManualActionType(type);
-        setShowManualAction(true);
-    };
-
-    const handleViewDetails = (item: any) => {
-        setSelectedItem(item);
-        setShowDetails(true);
-    };
 
     const withdrawals = [
         { id: "WDL9876", user: "Robert Wilson", amount: "$1,200.00", status: "Pending", date: "Apr 19, 2026", method: "Bank Transfer" },
@@ -123,66 +168,37 @@ export default function PaymentWalletPage() {
     return (
         <div className="p-8 space-y-8 bg-[#F9F9F9] min-h-screen">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                    <SidebarTrigger className="md:hidden block" />
-                    <h1 className="text-2xl font-bold text-gray-900">Financial Management</h1>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                        <SidebarTrigger className="md:hidden block" />
+                        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Financial Hub</h1>
+                    </div>
+                    <p className="text-sm font-bold text-gray-500">Manage transactions, payouts, and manual adjustments.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="border-gray-200 text-gray-700 font-bold gap-2">
+                            <Button variant="outline" className="border-gray-200 text-gray-700 font-bold gap-2 bg-white shadow-sm hover:bg-gray-50">
                                 <Download className="w-4 h-4" />
-                                Export Data
+                                Export
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-56">
                             <DropdownMenuLabel className="font-bold">Export Options</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="cursor-pointer font-bold">
-                                <FileText className="w-4 h-4 mr-2" /> Export All Transactions
+                                <FileText className="w-4 h-4 mr-2" /> Export Transactions
                             </DropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer font-bold">
-                                <TrendingUp className="w-4 h-4 mr-2" /> Export Payouts Only
+                                <TrendingUp className="w-4 h-4 mr-2" /> Export Payouts
                             </DropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer font-bold">
-                                <RotateCcw className="w-4 h-4 mr-2" /> Export Refunds/Adjustments
+                                <RotateCcw className="w-4 h-4 mr-2" /> Export Adjustments
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="cursor-pointer font-bold text-blue-700">
                                 <Download className="w-4 h-4 mr-2" /> Export Filtered View
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button className="bg-blue-700 hover:bg-blue-800 text-white font-bold gap-2">
-                                <Plus className="w-4 h-4" />
-                                Manual Action
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56">
-                            <DropdownMenuLabel>Financial Operations</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleManualAction("Refund")} className="cursor-pointer font-bold text-gray-700">
-                                Create Manual Refund
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleManualAction("Adjustment")} className="cursor-pointer font-bold text-gray-700">
-                                Manual Adjustment
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleManualAction("Credit")} className="cursor-pointer font-bold text-blue-700">
-                                Credit User Wallet
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleManualAction("Deduct")} className="cursor-pointer font-bold text-red-700">
-                                Deduct from Wallet
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleManualAction("Send")} className="cursor-pointer font-bold text-gray-700">
-                                Send Money to User
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleManualAction("Freeze Wallet")} className="cursor-pointer font-bold text-red-700">
-                                Freeze User Wallet
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -192,56 +208,64 @@ export default function PaymentWalletPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {stats.map((stat, i) => (
-                    <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${stat.bg}`}>
-                                {stat.icon}
+                    <Card key={i} className="border-none shadow-sm overflow-hidden bg-white">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className={`p-3 rounded-xl ${stat.bg}`}>
+                                    {stat.icon}
+                                </div>
+                                <Badge variant="secondary" className="bg-gray-50 text-gray-600 font-bold border-none text-[10px]">
+                                    MONTHLY
+                                </Badge>
                             </div>
-                            <p className="text-xs text-gray-700 font-bold uppercase tracking-wider">{stat.label}</p>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="text-3xl font-bold text-gray-900">{stat.amount}</p>
-                            <p className={`text-xs font-bold flex items-center gap-1 ${stat.label === "Total Balance" ? "text-green-700" : "text-gray-700"}`}>
-                                {stat.label === "Total Balance" && <TrendingUp className="w-3 h-3" />}
-                                {stat.trend}
-                            </p>
-                        </div>
-                    </div>
+                            <div className="space-y-1">
+                                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{stat.label}</p>
+                                <div className="flex items-baseline gap-2">
+                                    <p className="text-3xl font-bold text-gray-900 tracking-tight">{stat.amount}</p>
+                                    <span className={`text-[11px] font-bold ${stat.label === "Total Balance" ? "text-green-600" : "text-gray-500"}`}>
+                                        {stat.trend}
+                                    </span>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 ))}
             </div>
 
-            {/* Tabs & Filters */}
-            <div className="space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100">
-                    <div className="flex gap-8">
-                        <button 
-                            onClick={() => setActiveTab("transactions")}
-                            className={`pb-4 text-sm font-bold transition-all px-1 ${activeTab === "transactions" ? "text-blue-700 border-b-2 border-blue-700" : "text-gray-600 hover:text-gray-900"}`}
+            {/* Main Content Area */}
+            <Tabs defaultValue="transactions" onValueChange={(v) => setActiveTab(v as any)} className="space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
+                    <TabsList className="bg-transparent border-none p-0 gap-2">
+                        <TabsTrigger 
+                            value="transactions" 
+                            className="px-6 py-2.5 rounded-xl font-bold text-sm transition-all data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:shadow-none"
                         >
                             Transactions
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab("withdrawals")}
-                            className={`pb-4 text-sm font-bold transition-all px-1 ${activeTab === "withdrawals" ? "text-blue-700 border-b-2 border-blue-700" : "text-gray-600 hover:text-gray-900"}`}
+                        </TabsTrigger>
+                        <TabsTrigger 
+                            value="withdrawals" 
+                            className="px-6 py-2.5 rounded-xl font-bold text-sm transition-all data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:shadow-none"
                         >
                             Withdrawals
-                        </button>
-                    </div>
-                    <div className="flex items-center gap-2 pb-2">
+                        </TabsTrigger>
+                    </TabsList>
+                    
+                    <div className="flex items-center gap-2 px-2">
                         <Button 
                             onClick={() => setShowFilters(true)}
                             variant="ghost" 
                             size="sm" 
-                            className="text-gray-600 font-bold gap-2"
+                            className="text-gray-600 font-bold gap-2 hover:bg-gray-50"
                         >
                             <Filter className="w-4 h-4" />
                             Filters
                         </Button>
+                        <div className="w-[1px] h-4 bg-gray-200" />
                         <Button 
                             onClick={() => setShowAuditLogs(true)}
                             variant="ghost" 
                             size="sm" 
-                            className="text-gray-600 font-bold gap-2"
+                            className="text-gray-600 font-bold gap-2 hover:bg-gray-50"
                         >
                             <History className="w-4 h-4" />
                             Audit Logs
@@ -249,331 +273,522 @@ export default function PaymentWalletPage() {
                     </div>
                 </div>
 
-                {/* Search */}
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
-                    <Input 
-                        placeholder={`Search ${activeTab}...`} 
-                        className="pl-10 bg-white border border-gray-200 rounded-xl h-12 shadow-sm focus-visible:ring-blue-600 font-bold placeholder:text-gray-500" 
-                    />
+                {/* Search & Action Bar */}
+                <div className="flex flex-col md:flex-row gap-4 items-center">
+                    <div className="relative flex-1 w-full">
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <Input 
+                            placeholder={`Search by ID, user, or amount...`} 
+                            className="pl-11 bg-white border-gray-200 rounded-2xl h-12 shadow-sm focus-visible:ring-blue-600 font-bold placeholder:text-gray-400" 
+                        />
+                    </div>
                 </div>
 
-                {/* Table Area */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    {activeTab === "transactions" ? (
-                        <table className="w-full text-left">
-                            <thead className="bg-gray-50/50 border-b border-gray-100">
-                                <tr>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">TRANSACTION ID</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">TYPE</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">USER</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">METHOD</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">AMOUNT</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">STATUS</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-50">
+                <TabsContent value="transactions" className="m-0">
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <Table>
+                            <TableHeader className="bg-gray-50/50">
+                                <TableRow className="hover:bg-transparent border-b border-gray-100">
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Transaction</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Sender/User</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Type & Method</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Amount</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-right">Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
                                 {transactions.map((txn) => (
-                                    <tr key={txn.id} className="hover:bg-gray-50/50 transition-colors group">
-                                        <td className="px-6 py-4">
-                                            <span className="text-sm font-bold text-gray-900">{txn.id}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-sm text-gray-700 font-bold">{txn.type}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-sm text-gray-700 font-bold">{txn.user}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-xs text-gray-600 font-bold">{txn.method}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
+                                    <TableRow key={txn.id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-50 group">
+                                        <TableCell className="px-6 py-4">
+                                            <div className="space-y-0.5">
+                                                <p className="text-sm font-bold text-gray-900">{txn.id}</p>
+                                                <p className="text-[10px] font-bold text-gray-500 uppercase">{txn.date}</p>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <Avatar className="h-8 w-8 rounded-lg border border-gray-100">
+                                                    <AvatarFallback className="bg-blue-50 text-blue-700 text-[10px] font-bold">
+                                                        {txn.user.split(' ').map(n => n[0]).join('')}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <span className="text-sm text-gray-900 font-bold">{txn.user}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <div className="space-y-0.5">
+                                                <p className="text-sm text-gray-900 font-bold">{txn.type}</p>
+                                                <p className="text-[10px] text-gray-500 font-bold uppercase">{txn.method}</p>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
                                             <span className="text-sm font-bold text-gray-900">{txn.amount}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={getStatusBadgeClass(txn.status)}>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <Badge className={getStatusBadgeClass(txn.status)}>
                                                 {txn.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4 text-right">
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900">
                                                         <MoreVertical className="w-4 h-4" />
                                                     </Button>
                                                 </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
+                                                <DropdownMenuContent align="end" className="w-56">
+                                                     <DropdownMenuLabel className="font-bold">Transaction Actions</DropdownMenuLabel>
+                                                     <DropdownMenuSeparator />
                                                      <DropdownMenuItem onClick={() => handleViewDetails(txn)} className="font-bold gap-2 cursor-pointer">
                                                          <ExternalLink className="w-4 h-4" /> View Details
                                                      </DropdownMenuItem>
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Refund")} className="font-bold gap-2 cursor-pointer text-blue-700">
-                                                         <RotateCcw className="w-4 h-4" /> Refund
+                                                     
+                                                     <DropdownMenuSeparator />
+                                                     <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">Quick Manual Actions</DropdownMenuLabel>
+                                                     
+                                                     <DropdownMenuItem onClick={() => handleManualAction("Refund", txn)} className="font-bold gap-2 cursor-pointer text-amber-700">
+                                                         <RotateCcw className="w-4 h-4" /> Issue Refund
                                                      </DropdownMenuItem>
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Reverse")} className="font-bold gap-2 cursor-pointer text-red-700">
-                                                         <AlertCircle className="w-4 h-4" /> Reverse
+                                                     <DropdownMenuItem onClick={() => handleManualAction("Credit", txn)} className="font-bold gap-2 cursor-pointer text-blue-700">
+                                                         <Plus className="w-4 h-4" /> Credit Wallet
+                                                     </DropdownMenuItem>
+                                                     <DropdownMenuItem onClick={() => handleManualAction("Deduct", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
+                                                         <XCircle className="w-4 h-4" /> Deduct Wallet
+                                                     </DropdownMenuItem>
+                                                     <DropdownMenuItem onClick={() => handleManualAction("Adjustment", txn)} className="font-bold gap-2 cursor-pointer">
+                                                         <Settings2 className="w-4 h-4" /> Manual Adjustment
+                                                     </DropdownMenuItem>
+                                                     
+                                                     <DropdownMenuSeparator />
+                                                     <DropdownMenuItem onClick={() => handleManualAction("Freeze Wallet", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
+                                                         <AlertCircle className="w-4 h-4" /> Freeze User Wallet
                                                      </DropdownMenuItem>
                                                  </DropdownMenuContent>
                                             </DropdownMenu>
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <table className="w-full text-left">
-                            <thead className="bg-gray-50/50 border-b border-gray-100">
-                                <tr>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">WITHDRAWAL ID</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">USER</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">AMOUNT</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">METHOD</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">STATUS</th>
-                                    <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-50">
+                            </TableBody>
+                        </Table>
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="withdrawals" className="m-0">
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <Table>
+                            <TableHeader className="bg-gray-50/50">
+                                <TableRow className="hover:bg-transparent border-b border-gray-100">
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Withdrawal ID</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">User</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Payout Method</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Amount</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status</TableHead>
+                                    <TableHead className="px-6 h-12 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-right">Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
                                 {withdrawals.map((wdl) => (
-                                    <tr key={wdl.id} className="hover:bg-gray-50/50 transition-colors">
-                                        <td className="px-6 py-4">
-                                            <span className="text-sm font-bold text-gray-900">{wdl.id}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-sm text-gray-700 font-bold">{wdl.user}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
+                                    <TableRow key={wdl.id} className="hover:bg-gray-50/50 transition-colors border-b border-gray-50 group">
+                                        <TableCell className="px-6 py-4">
+                                            <div className="space-y-0.5">
+                                                <p className="text-sm font-bold text-gray-900">{wdl.id}</p>
+                                                <p className="text-[10px] font-bold text-gray-500 uppercase">{wdl.date}</p>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <Avatar className="h-8 w-8 rounded-lg border border-gray-100">
+                                                    <AvatarFallback className="bg-blue-50 text-blue-700 text-[10px] font-bold">
+                                                        {wdl.user.split(' ').map(n => n[0]).join('')}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <span className="text-sm text-gray-900 font-bold">{wdl.user}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <span className="text-sm text-gray-900 font-bold">{wdl.method}</span>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
                                             <span className="text-sm font-bold text-gray-900">{wdl.amount}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-xs text-gray-600 font-bold">{wdl.method}</span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={getStatusBadgeClass(wdl.status)}>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4">
+                                            <Badge className={getStatusBadgeClass(wdl.status)}>
                                                 {wdl.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 {wdl.status === "Pending" && (
-                                                    <>
-                                                        <Button size="sm" variant="outline" className="h-8 border-green-200 text-green-700 hover:bg-green-50 font-bold">Approve</Button>
-                                                        <Button size="sm" variant="outline" className="h-8 border-red-200 text-red-700 hover:bg-red-50 font-bold">Reject</Button>
-                                                    </>
-                                                )}
-                                                {wdl.status === "Failed" && (
-                                                    <Button size="sm" variant="outline" className="h-8 border-blue-200 text-blue-700 hover:bg-blue-50 font-bold">Retry Payout</Button>
+                                                    <div className="hidden group-hover:flex items-center gap-2">
+                                                        <Button size="sm" className="h-8 bg-green-700 hover:bg-green-800 text-white font-bold text-[10px] px-3 rounded-lg">Approve</Button>
+                                                        <Button size="sm" variant="outline" className="h-8 border-red-200 text-red-700 hover:bg-red-50 font-bold text-[10px] px-3 rounded-lg">Reject</Button>
+                                                    </div>
                                                 )}
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900">
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                         <DropdownMenuItem onClick={() => handleViewDetails(wdl)} className="font-bold gap-2 cursor-pointer">
-                                                             <FileText className="w-4 h-4" /> View Details
-                                                         </DropdownMenuItem>
-                                                         <DropdownMenuItem className="font-bold gap-2 cursor-pointer text-amber-700">
-                                                             <Clock className="w-4 h-4" /> Hold for Review
-                                                         </DropdownMenuItem>
-                                                         <DropdownMenuItem className="font-bold gap-2 cursor-pointer text-green-700">
-                                                             <CheckCircle2 className="w-4 h-4" /> Mark as Processed
-                                                         </DropdownMenuItem>
-                                                     </DropdownMenuContent>
+                                                    <DropdownMenuContent align="end" className="w-56">
+                                                        <DropdownMenuLabel className="font-bold">Withdrawal Actions</DropdownMenuLabel>
+                                                        <DropdownMenuSeparator />
+                                                        <DropdownMenuItem onClick={() => handleViewDetails(wdl)} className="font-bold gap-2 cursor-pointer">
+                                                            <Eye className="w-4 h-4" /> View Details
+                                                        </DropdownMenuItem>
+                                                        
+                                                        <DropdownMenuSeparator />
+                                                        <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">Management</DropdownMenuLabel>
+                                                        
+                                                        <DropdownMenuItem className="font-bold gap-2 cursor-pointer text-green-700">
+                                                            <CheckCircle2 className="w-4 h-4" /> Mark as Paid
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem className="font-bold gap-2 cursor-pointer text-blue-700">
+                                                            <Clock className="w-4 h-4" /> Hold for Review
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem className="font-bold gap-2 cursor-pointer text-red-700">
+                                                            <XCircle className="w-4 h-4" /> Cancel Request
+                                                        </DropdownMenuItem>
+
+                                                        <DropdownMenuSeparator />
+                                                        <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">Manual Adjustments</DropdownMenuLabel>
+                                                        
+                                                        <DropdownMenuItem onClick={() => handleManualAction("Adjustment", wdl)} className="font-bold gap-2 cursor-pointer">
+                                                            <Settings2 className="w-4 h-4" /> Manual Adjustment
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => handleManualAction("Credit", wdl)} className="font-bold gap-2 cursor-pointer text-blue-700">
+                                                            <Plus className="w-4 h-4" /> Credit User
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => handleManualAction("Freeze Wallet", wdl)} className="font-bold gap-2 cursor-pointer text-red-700">
+                                                            <AlertCircle className="w-4 h-4" /> Freeze User
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
-            </div>
+                            </TableBody>
+                        </Table>
+                    </div>
+                </TabsContent>
+            </Tabs>
 
             {/* Manual Action Dialog */}
             <Dialog open={showManualAction} onOpenChange={setShowManualAction}>
-                <DialogContent className="max-w-md">
-                    <DialogHeader>
-                        <DialogTitle className="font-bold text-xl">{manualActionType} Operation</DialogTitle>
-                        <DialogDescription className="font-bold text-gray-500">
-                            Perform a manual financial action. This will be logged in the audit trail.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label className="font-bold text-gray-700">Target User / ID</Label>
-                            <Input placeholder="Enter User ID or Name" className="font-bold" />
+                <DialogContent className="max-w-md p-0 gap-0 border-none shadow-2xl overflow-hidden">
+                    <div className="bg-amber-600 p-8 text-white relative">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Plus className="w-24 h-24" />
                         </div>
-                        {manualActionType !== "Freeze Wallet" && (
-                            <div className="space-y-2">
-                                <Label className="font-bold text-gray-700">Amount ($)</Label>
-                                <Input type="number" placeholder="0.00" className="font-bold" />
-                            </div>
-                        )}
-                        <div className="space-y-2">
-                            <Label className="font-bold text-gray-700">{manualActionType === "Freeze Wallet" ? "Reason for Freezing" : "Reason / Description"}</Label>
-                            <Textarea placeholder="Explain the reason for this action..." className="font-bold min-h-[100px]" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label className="font-bold text-gray-700">Category</Label>
-                            <Select>
-                                <SelectTrigger className="font-bold">
-                                    <SelectValue placeholder="Select category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="error" className="font-bold">Error Correction</SelectItem>
-                                    <SelectItem value="promo" className="font-bold">Promotional Credit</SelectItem>
-                                    <SelectItem value="dispute" className="font-bold">Dispute Resolution</SelectItem>
-                                    <SelectItem value="other" className="font-bold">Other</SelectItem>
-                                </SelectContent>
-                            </Select>
+                        <div className="relative space-y-2">
+                            <Badge className="bg-white/20 text-white border-none font-bold text-[10px] tracking-widest uppercase">Admin Override</Badge>
+                            <DialogTitle className="text-2xl font-bold tracking-tight">{manualActionType} Operation</DialogTitle>
+                            <DialogDescription className="text-amber-100 font-bold opacity-80">
+                                Perform a manual financial action. This will be logged in the audit trail.
+                            </DialogDescription>
                         </div>
                     </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setShowManualAction(false)} className="font-bold">Cancel</Button>
-                        <Button className="bg-blue-700 hover:bg-blue-800 text-white font-bold px-8">Confirm Action</Button>
+
+                    <div className="p-8 space-y-6 bg-white">
+                        <div className="space-y-4">
+                            <div className="space-y-3">
+                                <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Target User / ID</Label>
+                                
+                                {selectedUserForAction ? (
+                                    <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="h-10 w-10 rounded-xl border-2 border-white shadow-sm">
+                                                <AvatarFallback className="bg-blue-600 text-white font-bold text-xs">
+                                                    {selectedUserForAction.avatar || selectedUserForAction.user?.split(' ').map((n:any) => n[0]).join('') || "U"}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <p className="text-sm font-bold text-gray-900">{selectedUserForAction.name || selectedUserForAction.user}</p>
+                                                <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tight">{selectedUserForAction.id || "External User"}</p>
+                                            </div>
+                                        </div>
+                                        <Button 
+                                            variant="ghost" 
+                                            size="sm" 
+                                            onClick={() => setSelectedUserForAction(null)}
+                                            className="h-8 w-8 p-0 rounded-full hover:bg-blue-100 text-blue-600"
+                                        >
+                                            <RotateCcw className="w-4 h-4" />
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="relative">
+                                        <div className="relative">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                            <Input 
+                                                placeholder="Search user by name, email or ID..." 
+                                                className="pl-10 font-bold bg-gray-50/50 border-gray-100 rounded-2xl h-11 focus-visible:ring-blue-600"
+                                                value={userSearchTerm}
+                                                onChange={(e) => setUserSearchTerm(e.target.value)}
+                                            />
+                                        </div>
+
+                                        {filteredUsers.length > 0 && (
+                                            <div className="absolute z-10 w-full mt-2 bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                                <div className="max-h-[240px] overflow-y-auto p-2">
+                                                    {filteredUsers.map((user) => (
+                                                        <button
+                                                            key={user.id}
+                                                            onClick={() => {
+                                                                setSelectedUserForAction(user);
+                                                                setUserSearchTerm("");
+                                                            }}
+                                                            className="w-full flex items-center gap-3 p-3 hover:bg-blue-50 rounded-xl transition-colors text-left"
+                                                        >
+                                                            <Avatar className="h-9 w-9 rounded-lg border border-gray-100">
+                                                                <AvatarFallback className="bg-blue-50 text-blue-700 font-bold text-[10px]">
+                                                                    {user.avatar}
+                                                                </AvatarFallback>
+                                                            </Avatar>
+                                                            <div className="flex-1">
+                                                                <p className="text-sm font-bold text-gray-900">{user.name}</p>
+                                                                <p className="text-[10px] font-bold text-gray-400">{user.email}</p>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <p className="text-xs font-bold text-blue-700">{user.balance}</p>
+                                                                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">{user.id}</p>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            
+                            {manualActionType !== "Freeze Wallet" && (
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Amount ($)</Label>
+                                    <Input type="number" placeholder="0.00" className="font-bold rounded-xl border-gray-200 h-11" />
+                                </div>
+                            )}
+
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">{manualActionType === "Freeze Wallet" ? "Reason for Freezing" : "Reason / Description"}</Label>
+                                <Textarea 
+                                    placeholder="Explain the reason for this action..." 
+                                    className="font-bold min-h-[100px] rounded-2xl border-gray-200 focus:ring-amber-500" 
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Category</Label>
+                                <Select>
+                                    <SelectTrigger className="font-bold rounded-xl border-gray-200 h-11">
+                                        <SelectValue placeholder="Select category" />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl border-gray-100 shadow-xl">
+                                        <SelectItem value="error" className="font-bold">Error Correction</SelectItem>
+                                        <SelectItem value="promo" className="font-bold text-green-700">Promotional Credit</SelectItem>
+                                        <SelectItem value="dispute" className="font-bold text-red-700">Dispute Resolution</SelectItem>
+                                        <SelectItem value="other" className="font-bold">Other</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3">
+                            <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                            <p className="text-[11px] font-bold text-amber-800 leading-relaxed">
+                                This action will be permanently recorded in the system audit logs and will affect the users account immediately.
+                            </p>
+                        </div>
+                    </div>
+
+                    <DialogFooter className="p-6 border-t bg-gray-50/50">
+                        <Button variant="ghost" onClick={() => setShowManualAction(false)} className="font-bold rounded-xl">Cancel</Button>
+                        <Button className="bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl px-8 h-11 shadow-lg shadow-amber-200/50">Confirm Action</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
 
             {/* Transaction/Withdrawal Details Dialog */}
             <Dialog open={showDetails} onOpenChange={setShowDetails}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle className="font-bold text-xl">Investigation View: {selectedItem?.id}</DialogTitle>
-                        <DialogDescription className="font-bold text-gray-500">
-                            Detailed breakdown of the financial entity and linked information.
-                        </DialogDescription>
-                    </DialogHeader>
+                <DialogContent className="sm:max-w-[1000px] w-[95vw] max-h-[90vh] overflow-y-auto p-0 gap-0 border-none shadow-2xl">
+                    <div className="bg-blue-700 p-8 text-white relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <TrendingUp className="w-32 h-32" />
+                        </div>
+                        <div className="relative space-y-2">
+                            <Badge className="bg-white/20 text-white border-none font-bold text-[10px] tracking-widest uppercase">Investigation View</Badge>
+                            <DialogTitle className="text-3xl font-bold tracking-tight">{selectedItem?.id}</DialogTitle>
+                            <DialogDescription className="text-blue-100 font-bold opacity-80">
+                                Detailed financial breakdown and audit trail for this entity.
+                            </DialogDescription>
+                        </div>
+                    </div>
                     
                     {selectedItem && (
-                        <div className="space-y-8 py-4">
-                            {/* Key Info */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Amount</p>
-                                    <p className="text-lg font-bold text-gray-900">{selectedItem.amount}</p>
+                        <div className="p-8 space-y-8">
+                            {/* Key Stats Grid */}
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-1">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Amount</p>
+                                    <p className="text-xl font-bold text-gray-900">{selectedItem.amount}</p>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status</p>
-                                    <Badge className={getStatusBadgeClass(selectedItem.status)}>{selectedItem.status}</Badge>
+                                <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-1">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Status</p>
+                                    <Badge className={`${getStatusBadgeClass(selectedItem.status)} border-none shadow-none`}>{selectedItem.status}</Badge>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Date</p>
+                                <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-1">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date</p>
                                     <p className="text-sm font-bold text-gray-900">{selectedItem.date}</p>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Payment Method</p>
-                                    <p className="text-sm font-bold text-gray-900">{selectedItem.method}</p>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Payout Method</p>
-                                    <p className="text-sm font-bold text-gray-900">{selectedItem.payoutMethod || "Bank Transfer"}</p>
+                                <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 space-y-1">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Type</p>
+                                    <p className="text-sm font-bold text-gray-900">{selectedItem.type || "Withdrawal"}</p>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {/* Parties Involved */}
-                                <div className="bg-gray-50 p-6 rounded-xl space-y-4">
-                                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                                        <Plus className="w-4 h-4 text-blue-700" /> Involved Parties
-                                    </h4>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-500">Sender / User</span>
-                                            <span className="text-sm font-bold text-gray-900">{selectedItem.user || selectedItem.sender}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-500">Transporter / Traveler</span>
-                                            <span className="text-sm font-bold text-gray-900">{selectedItem.transporter || "Alex Nomad"}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-500">Receiver</span>
-                                            <span className="text-sm font-bold text-gray-900">{selectedItem.receiver || "N/A"}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-500">Linked Entity</span>
-                                            <span className="text-sm font-bold text-blue-700 hover:underline cursor-pointer">
-                                                {selectedItem.shipmentId || selectedItem.bookingId || selectedItem.tripId || "SHP-9921"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Timeline */}
-                                <div className="bg-gray-50 p-6 rounded-xl space-y-4">
-                                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                                        <History className="w-4 h-4 text-blue-700" /> Transaction Timeline
-                                    </h4>
-                                    <div className="space-y-4 relative before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[1px] before:bg-gray-200">
-                                        {(selectedItem.timeline || [{ status: "Created", date: selectedItem.date }]).map((event: any, i: number) => (
-                                            <div key={i} className="pl-6 relative">
-                                                <div className="absolute left-[5px] top-[6px] w-2 h-2 rounded-full bg-blue-700 border-2 border-white shadow-sm" />
-                                                <p className="text-sm font-bold text-gray-900">{event.status}</p>
-                                                <p className="text-[10px] font-bold text-gray-500">{event.date}</p>
+                                {/* Details Section */}
+                                <div className="space-y-6">
+                                    <div className="space-y-4">
+                                        <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-700" />
+                                            Parties & Entities
+                                        </h4>
+                                        <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
+                                            <div className="p-4 flex justify-between items-center">
+                                                <span className="text-xs font-bold text-gray-500">Sender / User</span>
+                                                <span className="text-sm font-bold text-gray-900">{selectedItem.user || selectedItem.sender}</span>
                                             </div>
-                                        ))}
+                                            <div className="p-4 flex justify-between items-center">
+                                                <span className="text-xs font-bold text-gray-500">Transporter</span>
+                                                <span className="text-sm font-bold text-gray-900">{selectedItem.transporter || "Alex Nomad"}</span>
+                                            </div>
+                                            <div className="p-4 flex justify-between items-center">
+                                                <span className="text-xs font-bold text-gray-500">Linked Entity</span>
+                                                <span className="text-sm font-bold text-blue-700 hover:underline cursor-pointer">
+                                                    {selectedItem.shipmentId || selectedItem.bookingId || "SHP-9921"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-700" />
+                                            Payment Information
+                                        </h4>
+                                        <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
+                                            <div className="p-4 flex justify-between items-center">
+                                                <span className="text-xs font-bold text-gray-500">Method</span>
+                                                <span className="text-sm font-bold text-gray-900">{selectedItem.method}</span>
+                                            </div>
+                                            <div className="p-4 flex justify-between items-center">
+                                                <span className="text-xs font-bold text-gray-500">Payout Target</span>
+                                                <span className="text-sm font-bold text-gray-900">{selectedItem.payoutMethod || "Standard Bank"}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Internal Notes */}
-                            <div className="space-y-3">
-                                <Label className="font-bold text-gray-900">Internal Admin Notes</Label>
-                                <Textarea 
-                                    placeholder="Add notes for other admins..." 
-                                    className="font-bold min-h-[100px] bg-amber-50/30 border-amber-100" 
-                                />
-                                <p className="text-[10px] font-bold text-gray-500">Only visible to administrators and financial team.</p>
+                                {/* Timeline Section */}
+                                <div className="space-y-4">
+                                    <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-700" />
+                                        Activity Timeline
+                                    </h4>
+                                    <div className="bg-gray-50/50 p-6 rounded-3xl relative">
+                                        <div className="space-y-6 relative before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-blue-100">
+                                            {(selectedItem.timeline || [{ status: "Entry Created", date: selectedItem.date }]).map((event: any, i: number) => (
+                                                <div key={i} className="pl-8 relative">
+                                                    <div className="absolute left-[-2px] top-[6px] w-3 h-3 rounded-full bg-blue-700 border-4 border-white shadow-sm" />
+                                                    <p className="text-sm font-bold text-gray-900">{event.status}</p>
+                                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{event.date}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3 pt-4">
+                                        <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Admin Notes</Label>
+                                        <Textarea 
+                                            placeholder="Add internal notes..." 
+                                            className="font-bold min-h-[100px] bg-amber-50/30 border-amber-100 rounded-2xl text-sm" 
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
 
-                    <DialogFooter className="flex items-center justify-between border-t pt-6 mt-6">
+                    <DialogFooter className="p-6 border-t bg-gray-50/50 flex items-center justify-between">
                         <div className="flex gap-2">
                             {selectedItem?.status === "Pending" && (
                                 <>
-                                    <Button className="bg-green-700 hover:bg-green-800 text-white font-bold">Approve</Button>
-                                    <Button variant="outline" className="border-red-200 text-red-700 hover:bg-red-50 font-bold">Reject</Button>
+                                    <Button className="bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl px-6">Approve</Button>
+                                    <Button variant="outline" className="border-red-200 text-red-700 hover:bg-red-50 font-bold rounded-xl px-6">Reject</Button>
                                 </>
                             )}
-                            {selectedItem?.status === "Failed" && (
-                                <Button className="bg-blue-700 hover:bg-blue-800 text-white font-bold">Retry Payout</Button>
-                            )}
                         </div>
-                        <Button variant="ghost" onClick={() => setShowDetails(false)} className="font-bold">Close</Button>
+                        <Button variant="ghost" onClick={() => setShowDetails(false)} className="font-bold rounded-xl">Close View</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
 
             {/* Audit Logs Sheet */}
             <Sheet open={showAuditLogs} onOpenChange={setShowAuditLogs}>
-                <SheetContent className="sm:max-w-md overflow-y-auto">
-                    <SheetHeader>
-                        <SheetTitle className="font-bold text-xl">Financial Audit Logs</SheetTitle>
-                        <SheetDescription className="font-bold text-gray-500">
-                            Every financial action performed by administrators or the system is logged here.
-                        </SheetDescription>
-                    </SheetHeader>
-                    <div className="mt-8 space-y-6">
+                <SheetContent className="sm:max-w-md overflow-y-auto p-0 border-none shadow-2xl">
+                    <div className="bg-gray-900 p-8 text-white">
+                        <SheetHeader className="text-left space-y-2">
+                            <Badge className="bg-blue-600 text-white border-none font-bold text-[10px] w-fit">SECURITY AUDIT</Badge>
+                            <SheetTitle className="text-2xl font-bold text-white tracking-tight">System Audit Trail</SheetTitle>
+                            <SheetDescription className="text-gray-400 font-bold text-sm">
+                                Complete log of all administrative financial operations.
+                            </SheetDescription>
+                        </SheetHeader>
+                    </div>
+                    
+                    <div className="p-6 space-y-6">
                         {auditLogs.map((log) => (
-                            <div key={log.id} className="p-4 rounded-xl border border-gray-100 space-y-3 hover:bg-gray-50/50 transition-colors">
-                                <div className="flex justify-between items-start">
-                                    <Badge className="bg-blue-50 text-blue-700 border-none font-bold text-[10px]">{log.action}</Badge>
-                                    <span className="text-[10px] font-bold text-gray-400">{log.date}</span>
+                            <div key={log.id} className="p-5 rounded-3xl border border-gray-100 space-y-4 hover:shadow-md transition-all bg-white">
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center">
+                                            <History className="w-4 h-4 text-blue-700" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-gray-900">{log.action}</p>
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{log.date}</p>
+                                        </div>
+                                    </div>
+                                    <Badge className="bg-gray-100 text-gray-600 border-none font-bold text-[9px] uppercase">{log.id}</Badge>
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-sm font-bold text-gray-900">Performed by: {log.admin}</p>
-                                    <p className="text-xs font-bold text-gray-600">Target ID: <span className="text-blue-700">{log.target}</span></p>
-                                    <div className="flex items-center gap-2 mt-2 p-2 bg-gray-100 rounded text-[10px] font-bold">
-                                        <span className="text-red-600 line-through">{log.oldValue}</span>
-                                        <ArrowRight className="w-3 h-3 text-gray-400" />
-                                        <span className="text-green-600">{log.newValue}</span>
+                                
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-2xl">
+                                        <div className="flex-1 space-y-1">
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Administrator</p>
+                                            <p className="text-sm font-bold text-gray-900">{log.admin}</p>
+                                        </div>
+                                        <div className="flex-1 space-y-1 text-right">
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Target Entity</p>
+                                            <p className="text-sm font-bold text-blue-700">{log.target}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 p-3 bg-gray-900 rounded-2xl text-white">
+                                        <span className="text-[11px] font-bold text-gray-400 line-through opacity-50">{log.oldValue}</span>
+                                        <ArrowRight className="w-3 h-3 text-blue-500" />
+                                        <span className="text-[11px] font-bold text-blue-400">{log.newValue}</span>
                                     </div>
                                 </div>
+
                                 <div className="pt-2 border-t border-gray-50">
-                                    <p className="text-xs font-bold text-gray-500 italic">{log.reason}</p>
+                                    <p className="text-xs font-bold text-gray-600 italic leading-relaxed">
+                                        <span className="text-gray-400 mr-2 not-italic font-bold text-[10px] uppercase">Reason:</span>
+                                        {log.reason}
+                                    </p>
                                 </div>
                             </div>
                         ))}
