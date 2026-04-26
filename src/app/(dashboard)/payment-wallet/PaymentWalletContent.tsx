@@ -331,41 +331,49 @@ export default function PaymentWalletPage() {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="px-6 py-4 text-right">
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900">
-                                                        <MoreVertical className="w-4 h-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="w-56">
-                                                     <DropdownMenuLabel className="font-bold">Transaction Actions</DropdownMenuLabel>
-                                                     <DropdownMenuSeparator />
-                                                     <DropdownMenuItem onClick={() => handleViewDetails(txn)} className="font-bold gap-2 cursor-pointer">
-                                                         <ExternalLink className="w-4 h-4" /> View Details
-                                                     </DropdownMenuItem>
-                                                     
-                                                     <DropdownMenuSeparator />
-                                                     <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">Quick Manual Actions</DropdownMenuLabel>
-                                                     
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Refund", txn)} className="font-bold gap-2 cursor-pointer text-amber-700">
-                                                         <RotateCcw className="w-4 h-4" /> Issue Refund
-                                                     </DropdownMenuItem>
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Credit", txn)} className="font-bold gap-2 cursor-pointer text-blue-700">
-                                                         <Plus className="w-4 h-4" /> Credit Wallet
-                                                     </DropdownMenuItem>
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Deduct", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
-                                                         <XCircle className="w-4 h-4" /> Deduct Wallet
-                                                     </DropdownMenuItem>
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Adjustment", txn)} className="font-bold gap-2 cursor-pointer">
-                                                         <Settings2 className="w-4 h-4" /> Manual Adjustment
-                                                     </DropdownMenuItem>
-                                                     
-                                                     <DropdownMenuSeparator />
-                                                     <DropdownMenuItem onClick={() => handleManualAction("Freeze Wallet", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
-                                                         <AlertCircle className="w-4 h-4" /> Freeze User Wallet
-                                                     </DropdownMenuItem>
-                                                 </DropdownMenuContent>
-                                            </DropdownMenu>
+                                            <div className="flex items-center justify-end gap-2">
+                                                {txn.status === "Pending" && (
+                                                    <div className="flex items-center gap-2">
+                                                        <Button size="sm" className="h-8 bg-green-700 hover:bg-green-700 text-white font-bold text-[10px] px-3 rounded-lg shadow-none hover:shadow-none transform-none transition-none select-none">Approve</Button>
+                                                        <Button size="sm" variant="outline" className="h-8 border-red-200 hover:border-red-200 text-red-700 hover:text-red-700 hover:bg-transparent font-bold text-[10px] px-3 rounded-lg shadow-none hover:shadow-none transform-none transition-none select-none">Reject</Button>
+                                                    </div>
+                                                )}
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900">
+                                                            <MoreVertical className="w-4 h-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent align="end" className="w-56">
+                                                         <DropdownMenuLabel className="font-bold">Transaction Actions</DropdownMenuLabel>
+                                                         <DropdownMenuSeparator />
+                                                         <DropdownMenuItem onClick={() => handleViewDetails(txn)} className="font-bold gap-2 cursor-pointer">
+                                                             <ExternalLink className="w-4 h-4" /> View Details
+                                                         </DropdownMenuItem>
+                                                         
+                                                         <DropdownMenuSeparator />
+                                                         <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase px-2 py-1.5">Quick Manual Actions</DropdownMenuLabel>
+                                                         
+                                                         <DropdownMenuItem onClick={() => handleManualAction("Refund", txn)} className="font-bold gap-2 cursor-pointer text-amber-700">
+                                                             <RotateCcw className="w-4 h-4" /> Issue Refund
+                                                         </DropdownMenuItem>
+                                                         <DropdownMenuItem onClick={() => handleManualAction("Credit", txn)} className="font-bold gap-2 cursor-pointer text-blue-700">
+                                                             <Plus className="w-4 h-4" /> Credit Wallet
+                                                         </DropdownMenuItem>
+                                                         <DropdownMenuItem onClick={() => handleManualAction("Deduct", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
+                                                             <XCircle className="w-4 h-4" /> Deduct Wallet
+                                                         </DropdownMenuItem>
+                                                         <DropdownMenuItem onClick={() => handleManualAction("Adjustment", txn)} className="font-bold gap-2 cursor-pointer">
+                                                             <Settings2 className="w-4 h-4" /> Manual Adjustment
+                                                         </DropdownMenuItem>
+                                                         
+                                                         <DropdownMenuSeparator />
+                                                         <DropdownMenuItem onClick={() => handleManualAction("Freeze Wallet", txn)} className="font-bold gap-2 cursor-pointer text-red-700">
+                                                             <AlertCircle className="w-4 h-4" /> Freeze User Wallet
+                                                         </DropdownMenuItem>
+                                                     </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -420,9 +428,9 @@ export default function PaymentWalletPage() {
                                         <TableCell className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 {wdl.status === "Pending" && (
-                                                    <div className="hidden group-hover:flex items-center gap-2">
-                                                        <Button size="sm" className="h-8 bg-green-700 hover:bg-green-800 text-white font-bold text-[10px] px-3 rounded-lg">Approve</Button>
-                                                        <Button size="sm" variant="outline" className="h-8 border-red-200 text-red-700 hover:bg-red-50 font-bold text-[10px] px-3 rounded-lg">Reject</Button>
+                                                    <div className="flex items-center gap-2">
+                                                        <Button size="sm" className="h-8 bg-green-700 hover:bg-green-700 text-white font-bold text-[10px] px-3 rounded-lg shadow-none hover:shadow-none transform-none transition-none select-none">Approve</Button>
+                                                        <Button size="sm" variant="outline" className="h-8 border-red-200 hover:border-red-200 text-red-700 hover:text-red-700 hover:bg-transparent font-bold text-[10px] px-3 rounded-lg shadow-none hover:shadow-none transform-none transition-none select-none">Reject</Button>
                                                     </div>
                                                 )}
                                                 <DropdownMenu>
@@ -726,8 +734,8 @@ export default function PaymentWalletPage() {
                         <div className="flex gap-2">
                             {selectedItem?.status === "Pending" && (
                                 <>
-                                    <Button className="bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl px-6">Approve</Button>
-                                    <Button variant="outline" className="border-red-200 text-red-700 hover:bg-red-50 font-bold rounded-xl px-6">Reject</Button>
+                                    <Button className="bg-green-700 hover:bg-green-700 text-white font-bold rounded-xl px-6 shadow-none hover:shadow-none transform-none transition-none select-none">Approve</Button>
+                                    <Button variant="outline" className="border-red-200 hover:border-red-200 text-red-700 hover:text-red-700 hover:bg-transparent font-bold rounded-xl px-6 shadow-none hover:shadow-none transform-none transition-none select-none">Reject</Button>
                                 </>
                             )}
                         </div>
