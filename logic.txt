@@ -1,25 +1,5 @@
-Create an admin dashboard feature for "Users & Verification" page.
-
-Add a "+ Add User" button at the top right corner beside the search bar.
-
-When the button is clicked, open a modal form to create a new user manually.
-
-The form should include the following fields:
-- Full Name (text input)
-- Email (email input)
-- Phone Number (text input)
-- Address (text input or textarea)
-- Role (dropdown with options: Sender, Traveler, Transporter)
-- KYC Status (toggle or dropdown: Approved / Not Approved)
-
-Additional requirements:
-- Form validation for required fields
-- Clean and modern UI consistent with the existing dashboard design
-- Submit button to create user
-- Cancel button to close modal
-
-After submission:
-- Add the new user to the users table dynamically
-- Show success message (toast or alert)
-
-Design should match a professional admin panel style with minimal and clean layout.
+We forgot to mention the discount and referral code management. Under Settings, we need Discount
+Management section where we can create and manage customised referral coupons or discount
+codes.
+To make it easier for you, we have already created the design, please follow the workflow as the
+image number:

@@ -1,7 +1,8 @@
 "use client";
 
 import React from 'react';
-import { DollarSign, Shield, FileText, HelpCircle, Save } from 'lucide-react';
+import Link from "next/link";
+import { DollarSign, Shield, ChevronRight, Ticket, Users2, ChartNoAxesCombined } from 'lucide-react';
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 
@@ -142,6 +143,68 @@ export default function SettingsPage() {
             <button className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-md flex items-center justify-center gap-2">
               Save All Settings
             </button>
+          </div>
+
+          {/* Discount & Referral Management */}
+          <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-6">
+            <h2 className="text-lg font-bold text-gray-900">Discount & Referral Management</h2>
+
+            <div className="space-y-3">
+              <Link
+                href="/settings/discount-referral-management"
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100 text-purple-600">
+                    <Ticket className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Manage Discount Codes</p>
+                    <p className="text-xs text-gray-600 font-bold">Create and manage promo campaigns</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </Link>
+
+              <Link
+                href="/settings/discount-referral-management"
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-green-100 text-green-600">
+                    <Users2 className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Manage Referral Programs</p>
+                    <p className="text-xs text-gray-600 font-bold">Set invites and incentive rewards</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </Link>
+
+              <Link
+                href="/settings/code-usage"
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-all text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+                    <ChartNoAxesCombined className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Track Code Usage</p>
+                    <p className="text-xs text-gray-600 font-bold">Monitor redemptions and performance</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </Link>
+            </div>
+
+            <Link
+              href="/settings/discount-referral-management"
+              className="block w-full border border-blue-200 text-blue-700 py-3.5 rounded-xl font-bold text-sm hover:bg-blue-50 transition-all text-center"
+            >
+              Open Management
+            </Link>
           </div>
         </div>
       </div>
