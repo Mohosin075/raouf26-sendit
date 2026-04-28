@@ -4,6 +4,20 @@ import type React from "react";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,10 +28,20 @@ import {
     Mail, 
     MessageSquare, 
     Bell,
-    Search
+    Search,
+    MoreVertical
 } from "lucide-react";
 
 export default function NotificationsComponent() {
+    const [selectedNotification, setSelectedNotification] = useState<{
+        id: string;
+        type: string;
+        message: string;
+        trigger: string;
+        status: string;
+        date: string;
+    } | null>(null);
+
     const stats = [
         { label: "Email Sent", count: "12,847", icon: <Mail className="w-5 h-5 text-blue-600" /> },
         { label: "SMS Sent", count: "5,432", icon: <MessageSquare className="w-5 h-5 text-green-600" /> },
@@ -92,6 +116,7 @@ export default function NotificationsComponent() {
                             <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">TRIGGER EVENT</th>
                             <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider">STATUS</th>
                             <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">DATE</th>
+                            <th className="px-6 py-4 text-[10px] font-bold text-gray-600 uppercase tracking-wider text-right">ACTION</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -120,11 +145,76 @@ export default function NotificationsComponent() {
                                 <td className="px-6 py-4 text-right">
                                     <span className="text-sm text-gray-700 font-bold">{notif.date}</span>
                                 </td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center justify-end">
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                    <MoreVertical className="h-4 w-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                                <DropdownMenuItem onClick={() => setSelectedNotification(notif)}>
+                                                    View
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem>Resend</DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            <Dialog open={Boolean(selectedNotification)} onOpenChange={(open) => !open && setSelectedNotification(null)}>
+                <DialogContent className="sm:max-w-lg">
+                    <DialogHeader>
+                        <DialogTitle>Notification Details</DialogTitle>
+                        <DialogDescription>
+                            See notification message and trigger information.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    {selectedNotification && (
+                        <div className="space-y-4 text-sm">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p className="text-xs font-semibold text-gray-500 uppercase">ID</p>
+                                    <p className="font-semibold text-gray-900">{selectedNotification.id}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-semibold text-gray-500 uppercase">Type</p>
+                                    <p className="font-semibold text-gray-900">{selectedNotification.type}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-semibold text-gray-500 uppercase">Status</p>
+                                    <p className="font-semibold text-gray-900">{selectedNotification.status}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-semibold text-gray-500 uppercase">Date</p>
+                                    <p className="font-semibold text-gray-900">{selectedNotification.date}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p className="text-xs font-semibold text-gray-500 uppercase">Message</p>
+                                <p className="font-semibold text-gray-900">{selectedNotification.message}</p>
+                            </div>
+                            <div>
+                                <p className="text-xs font-semibold text-gray-500 uppercase">Trigger Event</p>
+                                <p className="font-semibold text-gray-900">{selectedNotification.trigger}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setSelectedNotification(null)}>
+                            Close
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
